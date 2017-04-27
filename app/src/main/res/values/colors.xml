@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="google_blue">#006BEA</color>
+    <color name="google_green">#1EFF05</color>
+    <color name="google_red">#EA2500</color>
+    <color name="google_yellow">#F5FF27</color>
+
+
+    <color name="black_overlay_33">#33000000</color>
+    <color name="common_green">@color/global_green_1</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="menu_item_selected">@color/global_blue_3</color>
+    <color name="menu_dark_blue">@color/global_blue_5</color>
+    <color name="menu_dark2_blue">@color/global_blue_6</color>
+    <color name="common_yellow">@color/global_orange_0</color>
+    <color name="light_blue_bg">@color/global_blue_0</color>
+    <color name="gray_line_middle">#55000000</color>
+    <color name="black_font">@color/global_black</color>
+    <color name="red_bg">#FF055D</color>
+
+    <!--以下是已知公共组件颜色-->
+    <color name="common_gray_line">@color/global_gray_1</color>
+    <color name="common_theme_blue">@color/global_blue_3</color>
+    <color name="common_btn_blue">@color/global_blue_1</color>
+    <color name="common_blue_dark">@color/global_blue_2</color>
+    <color name="common_bg_gray">@color/global_gray_0</color>
+    <color name="common_orange_light">@color/global_orange_1</color>
+    <color name="common_orange_dark">@color/global_orange_2</color>
+    <color name="common_text_gray_dark">@color/global_gray_2</color>
+    <color name="common_gray_dark_middle">@color/global_gray_3</color>
+    <color name="white">@color/global_white</color>
+    <color name="black">@color/global_black</color>
+
+    <!--以下是基础颜色库，不允许新增，只允许引用！！！-->
+    <color name="global_transparent">@android:color/transparent</color>
+    <color name="global_white">@android:color/white</color>
+    <color name="global_black">@android:color/black</color>
+
+    <color name="global_gray_0">#f6f7fb</color>
+    <color name="global_gray_1">#dadee6</color>
+    <color name="global_gray_2">#696969</color>
+    <color name="global_gray_3">#A5A5A5</color>
+
+    <color name="global_blue_0">#EEF5FF</color>
+    <color name="global_blue_1">#3d95ff</color>
+    <color name="global_blue_2">#287de5</color>
+    <color name="global_blue_3">#3f6ed9</color>
+    <color name="global_blue_4">#303F9F</color>
+    <color name="global_blue_5">#0e3b61</color>
+    <color name="global_blue_6">#082a47</color>
+
+    <color name="global_orange_0">#fac438</color>
+    <color name="global_orange_1">#ff5c11</color>
+    <color name="global_orange_2">#e0510f</color>
+
+    <color name="global_green_1">#33cf88</color>
+    <color name="red">#ff0000</color>
+
+    <color name="Indigo_colorPrimaryDark">#303f9f</color>
+       <color name="Indigo_colorPrimary">#3f51b5</color>
+       <color name="Indigo_nav_color">#4675FF</color>
+
+    <color name="gray_btn_bg_pressed_color">#B6B6B6</color>
+    <color name="gray_btn_bg_color">#D0D0D0</color>
+
+    <color name="blue_btn_bg_color">#AEDEF4</color>
+    <color name="blue_btn_bg_pressed_color">#96BFD2</color>
+    <color name="title_bg_blue">#54a5ff</color>
+    <!-- 透明 -->
+    <color name="transparent">#00000000</color>
+
+</resources>

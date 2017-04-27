@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Tablayout自定义tabView复杂布局，根布局必须是相对，否则高度无法按设置值显示-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!--必须在包一层容器布局，并且整个item的高由此容器决定，与根布局无关-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#3300"
+        android:layout_height="80dp">
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv"
+        android:layout_alignTop="@+id/iv"
+        android:layout_marginLeft="-13dp"
+        android:layout_marginTop="-5dp"
+        android:background="#44000000"
+        android:visibility="gone"
+        android:text="12"/>
+    </RelativeLayout>
+</RelativeLayout>
+
+
+<!--
+    android:layout_toRightOf="@+id/iv"
+    android:layout_alignTop="@+id/iv"
+    android:layout_marginLeft="-10dp"
+    android:layout_marginTop="-10dp"-->

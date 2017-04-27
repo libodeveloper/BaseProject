@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <Button
+        android:id="@+id/bt_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="recyclerView"/>
+    <Button
+        android:id="@+id/bt_tabLayout_ViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="tabLayout_ViewPager"/>
+    <Button
+        android:id="@+id/bt_TagFlowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="TagFlowLayout - - 流布局"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/bt_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Popwindow左滑菜单"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/bt_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Popwindow右滑菜单"
+            />
+    </LinearLayout>
+    <Button
+        android:id="@+id/bt_DrawerLayout_slidingmenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="DrawerLayout快速实现菜单侧滑"/>
+    <Button
+        android:id="@+id/bt_slidingmenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Toolbar + DrawerLayout快速实现高大上菜单侧滑"/>
+    <Button
+        android:id="@+id/bt_linkage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="横向 + 上下联动列表"/>
+    <Button
+        android:id="@+id/bt_selecet_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="选择图片（相册 + 拍照）"/>
+
+    <Button
+        android:id="@+id/bt_bigFile_upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="大文件上传"/>
+    </LinearLayout>
+   </ScrollView>
+</LinearLayout>

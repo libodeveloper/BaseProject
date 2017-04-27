@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="@dimen/carTypeRightWidth"
+              android:layout_height="@dimen/CarHeight"
+              android:background="@color/white"
+              android:orientation="horizontal">
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/common_gray_line"></View>
+    <LinearLayout
+        android:layout_width="@dimen/carTypeRightWid"
+        android:layout_height="@dimen/CarHeight"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/carTypeHeight"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="2dp"
+            android:orientation="vertical">
+
+            <com.example.jzg.myapplication.view.AutoFitTextView
+                android:id="@+id/tv_chexing"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textSize="@dimen/carTypeTextSize"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/tv_zhidaojia"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:text="" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="gone"
+            android:background="@color/common_gray_line"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_close"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/common_text_gray_dark"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:text="关闭" />
+
+            <TextView
+                android:id="@+id/tv_ok"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/common_theme_blue"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:text="确认" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/common_gray_line"></View>
+</LinearLayout>

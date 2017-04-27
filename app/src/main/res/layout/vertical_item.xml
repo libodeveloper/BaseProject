@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/item_buy_car_compare_data1"
+          android:layout_width="@dimen/carTypeRightWid"
+          android:layout_height="@dimen/ItmeHeight"
+          android:padding="1dp"
+          android:background="@color/white"
+          android:textColor="@color/black_overlay"
+          android:textSize="@dimen/carTypeTextSize"
+          android:text=""
+          android:gravity="center" />

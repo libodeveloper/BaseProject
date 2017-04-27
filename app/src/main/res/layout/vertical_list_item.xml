@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="@dimen/ItmeHeightS"
+              android:background="@color/white"
+              android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/ll_hrz"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/ItmeHeightS"
+        android:background="@color/common_gray_line"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+
+</LinearLayout>

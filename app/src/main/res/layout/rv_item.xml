@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+                android:background="#2f2c"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+    android:gravity="center">
+
+<!--
+ android:background="#2f2c" 随便设置颜色 与默认手机色区分即可
+ android:layout_marginRight="1dp"
+ android:layout_marginBottom="1dp"
+ 加九宫格线 这样的方式才好使，自己划线，竖线始终显示不出来 不知为何
+ 手机背景本身是偏灰色，所以利用色差空出1dp 的色差“线”
+ -->
+    <!--<TextView-->
+<TextView
+        android:id="@+id/tv1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/blue_btn_bg_color"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:text="tv"/>
+
+    <!-- 画竖线无效 fuck -->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:background="#66000000"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:background="#66000000"/>
+
+</RelativeLayout>

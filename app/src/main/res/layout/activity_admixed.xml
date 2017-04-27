@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:zhy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#2f7dc8">
+
+        <TextView
+            android:id="@+id/title_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="车辆参配"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_large_20sp" />
+
+        <ImageView
+            android:id="@+id/title_return"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:onClick="goBack"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_gf_back" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_line_middle" />
+
+        <Button
+            android:id="@+id/tv_zhaopianbidui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="照片对比"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/CarHeight"
+        android:background="@color/common_bg_gray"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="@dimen/carTypeLeftWidth"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="@dimen/carTypeLeftWidth"
+                android:layout_height="@dimen/carTypeHeight"
+                android:gravity="center"
+                android:text="车辆款型"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:id="@+id/tv_show_all"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/red"
+                android:gravity="center"
+                android:text="隐藏相同配置"
+                android:textSize="@dimen/carTypeTextSize"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+
+
+        <com.example.jzg.myapplication.view.MySyncHorizontalScrollView
+            android:id="@+id/mytable_scrollview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/common_bg_gray"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/ll_hrz"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+        </com.example.jzg.myapplication.view.MySyncHorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/common_bg_gray" />
+
+        <com.example.jzg.myapplication.view.ScrollBottomScrollView
+            android:id="@+id/scrollBottomScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            >
+
+            <!-- 左边listview -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/common_bg_gray">
+
+                <com.example.jzg.myapplication.view.MyXRecyclerView
+                    android:id="@+id/contentListViewLeft"
+                    android:layout_width="@dimen/carTypeLeftWidth"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:fadingEdge="none"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:scrollbars="none"
+                    />
+                <!-- 右边 -->
+
+                <com.example.jzg.myapplication.view.MySyncHorizontalScrollView
+                    android:id="@+id/rightContentHorscrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:scrollbars="none">
+
+                    <com.example.jzg.myapplication.view.MyXRecyclerView
+                        android:id="@+id/contentListViewRight"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:cacheColorHint="@android:color/transparent"
+                        android:fadingEdge="none"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:scrollbars="none"
+                        />
+
+                </com.example.jzg.myapplication.view.MySyncHorizontalScrollView>
+            </LinearLayout>
+        </com.example.jzg.myapplication.view.ScrollBottomScrollView>
+</LinearLayout>

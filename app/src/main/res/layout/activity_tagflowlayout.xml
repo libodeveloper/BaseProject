@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.example.jzg.myapplication.tagflowlayout.widget.TagFlowLayout
+        android:id="@+id/tagFlowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        />
+</ScrollView>
+    <!--zhy:max_select="1" 最多选一个 变向成排列不规则的 gridview-->
+</LinearLayout>

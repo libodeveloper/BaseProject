@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TagFlowLayout">
+        <attr name="auto_select_effect" format="boolean"></attr>
+        <attr name="max_select" format="integer"></attr>
+        <attr name="gravity">
+            <enum name="left" value="-1" />
+            <enum name="center" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CustomButton">
+        <attr name="pressed_color" format="color" />
+        <attr name="unpressed_color" format="color" />
+        <attr name="round_radius" format="dimension" />
+        <attr name="btn_radius" format="dimension" />
+        <attr name="ripple_color" format="color" />
+        <attr name="ripple_alpha" format="integer" />
+        <attr name="ripple_duration" format="integer" />
+        <attr name="shape_type" format="enum">
+            <enum name="circle" value="0" />
+            <enum name="rectangle" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="CustomImageButton">
+        <attr name="pressed_src" format="reference" />
+        <attr name="unpressed_src" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="BottomTab">
+        <attr name="drawableTop" format="reference" />
+        <attr name="tabText" format="string|reference" />
+        <attr name="barTextColor" format="color|reference" />
+        <attr name="barTextSize" format="dimension|reference" />
+        <attr name="hintText" format="string|reference" />
+        <attr name="hintTextColor" format="color|reference" />
+        <attr name="hintTextSize" format="dimension|reference" />
+        <attr name="hintTextBackground" format="reference" />
+        <attr name="hintEnable" format="boolean" />
+        <attr name="verticalSpace" format="dimension|reference" />
+    </declare-styleable>
+    <declare-styleable name="customTextView">
+        <attr name="textSolidColor" format="color" />
+        <attr name="textStrokeColor" format="color" />
+        <attr name="textRadius" format="dimension" />
+        <attr name="textLeftTopRadius" format="dimension" />
+        <attr name="textLeftBottomRadius" format="dimension" />
+        <attr name="textRightTopRadius" format="dimension" />
+        <attr name="textRightBottomRadius" format="dimension" />
+        <attr name="textStrokeWidth" format="dimension" />
+        <attr name="textDrawable" format="reference" />
+        <attr name="textNormalTextColor" format="color" />
+        <attr name="textSelectedTextColor" format="color" />
+    </declare-styleable>
+    <declare-styleable name="TagCloudLinkView">
+        <attr name="tagLayoutColor" format="color" />
+        <attr name="tagTextColor" format="color" />
+        <attr name="tagTextSize" format="dimension" />
+        <attr name="isDeletable" format="boolean" />
+        <attr name="deletableTextColor" format="color" />
+        <attr name="deletableTextSize" format="dimension" />
+    </declare-styleable>
+
+    <!-- Declare custom theme attributes that allow changing which styles are
+         used for button bars depending on the API level.
+         ?android:attr/buttonBarStyle is new as of API 11 so this is
+         necessary to support previous API levels. -->
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference" />
+        <attr name="metaButtonBarButtonStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CropImageView">
+        <attr name="guidelines">
+            <enum name="on" value="2"/>
+            <enum name="onTouch" value="1"/>
+            <enum name="off" value="0"/>
+        </attr>
+        <attr name="fixAspectRatio" format="boolean"/>
+        <attr name="aspectRatioX" format="integer"/>
+        <attr name="aspectRatioY" format= "integer"/>
+        <attr name="imageResource" format="reference"/>
+    </declare-styleable>
+
+</resources>

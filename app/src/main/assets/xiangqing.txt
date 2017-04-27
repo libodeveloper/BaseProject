@@ -1,0 +1,257 @@
+{
+    "MemberValue": {
+        "Basic": {
+            "Id": 618,
+            "OrderNo": "JZG1708201601180006",
+            "SourceID": 1,
+            "CityID": 1708,
+            "ProvID": 17,
+            "Des": "无",
+            "LikeMan": "张晶",
+            "LikeTel": "13842807435",
+            "LikeAddr": "大连市甘井子区",
+            "Vin": "LUXG91S00CB023482",
+            "CarLicense": "辽B377AZ",
+            "RecordBrand": "纳智捷牌DYM6481AAA",
+            "EngineNum": "CB0023226",
+            "RecordDate": "2012-08-14T00:00:00",
+            "RecordAddrID": 1708,
+            "MakeID": 155,
+            "ModelID": 3275,
+            "StyleID": 102060,
+            "Color": 1,
+            "Mileage": 40989,
+            "Service": 2,
+            "AssessmentPrace": 0,
+            "AssessmentDes": "前后杠喷漆，轮胎更换。无重大事故，无水淹，无火烧，市场保有量小，保值差。",
+            "UserID": 24,
+            "Status": 6,
+            "CreateTime": "2016-01-18T09:19:01",
+            "UpdateTime": "2016-01-20T11:20:30",
+            "StartTime": "2016-01-18T09:19:01",
+            "EndTime": "2016-02-02T09:19:01",
+            "Exhaust": "2.2",
+            "Seating": 5,
+            "CarType1": 3,
+            "DrivingMode": 1,
+            "Transmission": 1,
+            "FuelType": 1,
+            "ProductionTime": "2012-07-11T00:00:00",
+            "Certificates": 1,
+            "ManufacturerPrice": 224000,
+            "SetGroupID": 1,
+            "ConfigureInfo": "",
+            "ConfirmCertificates": "",
+            "TaskType": 3,
+            "TaskBackNum": 0,
+            "TaskBackReason": "",
+            "AppraiseBackNum": 0,
+            "AppraiseBackReason": "",
+            "TransferCount": 0,
+            "PublishArea": 0,
+            "Insurance": null,
+            "Inspection": null,
+            "CarDes": "",
+            "CreateUserId": 11,
+            "YXOrderNo": "",
+            "LowestPrice": 0,
+            "AuctionEndTime": null,
+            "SaleType": 0,
+            "C2BBPrice": 0,
+            "VideoPath": "",
+            "RegisterCityID": 0,
+            "RegisterProvID": 0,
+            "BusinessPrice": 0,
+            "CompositeProPrice": 0,
+            "SalePrice": 12.8,
+            "SuggestSellPrice": 0,
+            "PerfDriveType": "",
+            "TransmissionType": "",
+            "EngineExhaust": "",
+            "Fuel": "",
+            "TaskOwnerName": "",
+            "Tasktel": "",
+            "CarType": 3,
+            "ProductType": 1,
+            "JZGAssessmentPrice": 0,
+            "JZGSalePrice": 0,
+            "ProgrammeId": 5,
+            "IsComplete": 0,
+            "DrivingLicenseProperty": 0,
+            "DrivingLicenseCheckEx": null,
+            "RegistLicenseProperty": 0,
+            "CardType": 0,
+            "CardNum": null,
+            "IsCardSame": 0,
+            "CarLicenseHave": 0,
+            "CarGetWay": 0,
+            "CarColorDes": null,
+            "CarColorActual": 0,
+            "TurboChargingHave": 0,
+            "Tyre": null,
+            "TyreProperty": null,
+            "LastTransferDate": null,
+            "NowUseOwner": 0,
+            "TrafficInsuranceHave": 0,
+            "CarInvoiceHave": 0,
+            "CarInvoiceMoney": 0,
+            "CarInvoiceDate": null,
+            "CarInvoiceOther": null,
+            "CertificateEx": null,
+            "CertificateExDes": null,
+            "MileageSame": 0,
+            "NameplateProperty": null,
+            "VinProperty": null,
+            "AppearanceCheck": 0,
+            "AccidentCheck": 0,
+            "EngineCheck": 0,
+            "DecorateCheck": 0,
+            "ChassisCheck": 0,
+            "ElectricalCheck": 0,
+            "BurningMark": 0,
+            "WaterMark": 0,
+            "MarketOwnership": 0,
+            "MarketAcceptance": 0,
+            "MarketHedgeRatio": 0,
+            "IsImport": 0,
+            "CarLicenseEx": 0,
+            "DefectValue": null,
+            "ProvinceName": "辽宁",
+            "CityName": "大连"
+        },
+        "CheckPositionList": [
+            {
+                "CheckPositionID": "L02",
+                "CheckPositionName": "左后",
+                "PartsPositionList": [
+                    {
+                        "TaskID": "618",
+                        "PartsPositionRelationID": "8",
+                        "CheckID": "P03_A004",
+                        "PartsPositionRelationName": "左B柱",
+                        "IsImportant": 1,
+                        "DefectTypeList": [
+                            {
+                                "TaskID": "618",
+                                "PartsPositionRelationID": "8",
+                                "DefectResultID": "14",
+                                "DefectTypeID": "F01",
+                                "DefectValueID": "D016",
+                                "DefectValueName": "爆漆",
+                                "ImgList": [
+                                    {
+                                        "TaskID": "618",
+                                        "PicID": "17",
+                                        "DefectValueID": "D016",
+                                        "DefectResultId": "14",
+                                        "UriID": "8_D016",
+                                        "PicPath": "/2016/10/aaa1.jpg"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "TaskID": "618",
+                        "PartsPositionRelationID": "71",
+                        "CheckID": "P01_A030",
+                        "PartsPositionRelationName": "车顶",
+                        "IsImportant": 1,
+                        "DefectTypeList": [
+                            {
+                                "TaskID": "618",
+                                "PartsPositionRelationID": "71",
+                                "DefectResultID": "15",
+                                "DefectTypeID": "F01",
+                                "DefectValueID": "D017",
+                                "DefectValueName": "流漆",
+                                "ImgList": [
+                                    {
+                                        "TaskID": "618",
+                                        "PicID": "18",
+                                        "DefectValueID": "D017",
+                                        "DefectResultId": "15",
+                                        "UriID": "71_D017",
+                                        "PicPath": "/2016/10/aaa1.jpg"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "PicList": []
+            },
+            {
+                "CheckPositionID": "L04",
+                "CheckPositionName": "右后",
+                "PartsPositionList": [
+                    {
+                        "TaskID": "618",
+                        "PartsPositionRelationID": "12",
+                        "CheckID": "P08_A006",
+                        "PartsPositionRelationName": "右C柱内侧",
+                        "IsImportant": 1,
+                        "DefectTypeList": [
+                            {
+                                "TaskID": "618",
+                                "PartsPositionRelationID": "12",
+                                "DefectResultID": "12",
+                                "DefectTypeID": "F02",
+                                "DefectValueID": "D022",
+                                "DefectValueName": "烧焊",
+                                "ImgList": [
+                                    {
+                                        "TaskID": "618",
+                                        "PicID": "15",
+                                        "DefectValueID": "D022",
+                                        "DefectResultId": "12",
+                                        "UriID": "12_D022",
+                                        "PicPath": "/2016/10/aaa1.jpg"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "PicList": []
+            },
+            {
+                "CheckPositionID": "L05",
+                "CheckPositionName": "右前",
+                "PartsPositionList": [
+                    {
+                        "TaskID": "618",
+                        "PartsPositionRelationID": "6",
+                        "CheckID": "P08_A003",
+                        "PartsPositionRelationName": "右A柱外侧",
+                        "IsImportant": 1,
+                        "DefectTypeList": [
+                            {
+                                "TaskID": "618",
+                                "PartsPositionRelationID": "6",
+                                "DefectResultID": "13",
+                                "DefectTypeID": "F01",
+                                "DefectValueID": "D016",
+                                "DefectValueName": "爆漆",
+                                "ImgList": [
+                                    {
+                                        "TaskID": "618",
+                                        "PicID": "16",
+                                        "DefectValueID": "D016",
+                                        "DefectResultId": "13",
+                                        "UriID": "6_D016",
+                                        "PicPath": "/2016/10/aaa1.jpg"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "PicList": []
+            }
+        ],
+        "ProcedurePicList": []
+    },
+    "status": 100,
+    "msg": ""
+}

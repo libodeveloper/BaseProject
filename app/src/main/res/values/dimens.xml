@@ -1,0 +1,77 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="left_list_width">160dp</dimen>
+    <dimen name="left_list_item_height">60dp</dimen>
+    <!-- 大字体 -->
+    <dimen name="text_large_20sp">20sp</dimen>
+    <dimen name="text_large_18sp">18sp</dimen>
+    <!-- 普通字体 -->
+    <dimen name="text_medium_16sp">16sp</dimen>
+    <dimen name="text_medium_14sp">14sp</dimen>
+    <!-- 小字体 -->
+    <dimen name="text_small_12sp">12sp</dimen>
+    <dimen name="text_small_10sp">10sp</dimen>
+
+    <!-- 标题字体大小 -->
+    <dimen name="jzg_title_size">20sp</dimen>
+    <!-- 提交按钮字体大小 -->
+    <dimen name="jzg_remit_btn_size">18sp</dimen>
+    <!-- 普通字体大小 -->
+    <dimen name="jzg_common_size">16sp</dimen>
+    <!-- 普通字体大小 -->
+    <dimen name="jzg_common_small_size">14sp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <!-- top高度 -->
+    <dimen name="top_height">50dp</dimen>
+
+    <dimen name="btn_radius">2dp</dimen>
+    <dimen name="round_radius">0dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- ListView相关配置-->
+    <dimen name="dividerHeight">1px</dimen>
+    <dimen name="paddingRight">5dp</dimen>
+    <dimen name="btn_height">50dp</dimen>
+    <dimen name="btn_margin">20dp</dimen>
+    <dimen name="smaple_pading">10dp</dimen>
+    <dimen name="text_padding_left">10dp</dimen>
+
+    <!-- layout下布局 fragment_other.xml 里 RecyclerView 的宽度-->
+    <dimen name="fragment_other_rv_width">160dp</dimen>
+    <!-- layout下布局 tv.xml 里  tv 的 margin-->
+    <dimen name="tv_margin">5dp</dimen>
+    <!-- layout下布局 fragment_other_information.xml 里的padding-->
+    <dimen name="fragment_other_information_padding">10dp</dimen>
+    <!-- layout下布局 fragment_other_information.xml 里的已填信息和实车信息中间View的宽度-->
+    <dimen name="fragment_other_information_view_width">1dp</dimen>
+
+    <!-- layout下布局 fragment_detection.xml 里 RecyclerView 的宽度-->
+    <dimen name="fragment_detection_rv_width">160dp</dimen>
+
+
+    <!-- horizontalverticalscroll 界面适配 -->
+    <!-- 控制 第一行的高度 -->
+    <dimen name="CarHeight">100dp</dimen>  <!-- 车辆款型 + 显示参配按钮 总高 代表第一行整行高度-->
+    <dimen name="carTypeHeight">65dp</dimen>  <!--车辆款型 高-->
+
+    <!-- 控制 左边第一列 车辆款型 和 左边 recycleview item 的宽度 -->
+    <dimen name="carTypeLeftWidth">115dp</dimen>
+
+    <!-- 控制 右边 recycleview item 的宽度 以及 第一行 每个item的宽度 留出 1dp做分割线 -->
+    <dimen name="carTypeRightWidth">120dp</dimen>
+    <dimen name="carTypeRightWid">119dp</dimen>
+
+    <!-- 左 右recycview item 高和总高度 留出 1dp做分割线-->
+    <dimen name="ItmeHeight">39dp</dimen>
+    <dimen name="ItmeHeightS">40dp</dimen>
+
+    <!--字体大小-->
+    <dimen name="carTypeTextSize">12sp</dimen>
+
+</resources>

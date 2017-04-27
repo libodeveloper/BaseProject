@@ -1,0 +1,81 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_tanchu"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="纠错"
+        android:textSize="20sp" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/long_line" />
+
+    <EditText
+        android:id="@+id/post_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line"
+        android:layout_above="@+id/bottom"
+        android:gravity="top|left"
+        android:hint="请填写错误问题"
+        android:lines="4"
+        android:textSize="18sp"
+        android:maxLength="100"
+        android:imeOptions="flagNoExtractUi"
+        />
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.example.jzg.myapplication.view.CustomRippleButton
+            android:id="@+id/crb_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="取消"
+            android:textColor="@color/common_text_gray_dark"
+            android:textSize="@dimen/text_large_18sp"
+            android:gravity="center"
+            android:background="@null"
+            zhy:unpressed_color="@color/common_gray_line"
+            zhy:ripple_color="@color/common_gray_dark_middle"
+            zhy:round_radius="15dp"
+            />
+
+        <com.example.jzg.myapplication.view.CustomRippleButton
+            android:id="@+id/crb_confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="确定"
+            android:textColor="@color/common_text_gray_dark"
+            android:textSize="@dimen/text_large_18sp"
+            android:gravity="center"
+            android:background="@null"
+            zhy:unpressed_color="@color/common_gray_line"
+            zhy:ripple_color="@color/common_gray_dark_middle"
+            zhy:round_radius="15dp"
+            />
+    </LinearLayout>
+
+</RelativeLayout>
