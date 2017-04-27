@@ -16,7 +16,7 @@ package com.example.jzg.myapplication.dialog;
  *
  * @Email: libo@jingzhengu.com
  * @Description: 确认 取消 title content 通用dialog
- *                 单例模式只存在一个dialog 避免 重复new dialog 导致一些bug
+ *                 单例模式只存在一个dialog 避免 重复new dialog 导致一些bug!
  */
 public class DialogUtils {
 
