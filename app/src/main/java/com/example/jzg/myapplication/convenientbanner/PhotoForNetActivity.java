@@ -75,16 +75,8 @@ public class PhotoForNetActivity extends AppCompatActivity {
         tvTitle.setText(num + "/" + picList.size());
     }
 
-    private void goBack(View view){
+    public void goBack(View view){
         finish();
     }
 
-    @OnClick({R.id.ivLeft})
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.ivLeft:
-                finish();
-                break;
-        }
-    }
 }

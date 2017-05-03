@@ -134,17 +134,8 @@ public class BannerActivity extends AppCompatActivity {
         }
     }
 
-    private void goBack(View view){
+    public  void goBack(View view){
         finish();
-    }
-
-    @OnClick({R.id.ivLeft})
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.ivLeft:
-                finish();
-                break;
-        }
     }
 
 
