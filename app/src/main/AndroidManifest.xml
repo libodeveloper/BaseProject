@@ -57,6 +57,8 @@
         <activity android:name="com.example.jzg.myapplication.upload.UploadDemoActivity"></activity>
         <activity android:name="com.example.jzg.myapplication.upload.UploadBigFileDemoActivity"></activity>
         <activity android:name="com.example.jzg.myapplication.horizontalverticalscroll.AdmixedContrastActivity"></activity>
+        <activity android:name="com.example.jzg.myapplication.convenientbanner.PhotoForNetActivity"></activity>
+        <activity android:name="com.example.jzg.myapplication.convenientbanner.BannerActivity"></activity>
 
     </application>
 

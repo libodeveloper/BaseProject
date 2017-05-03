@@ -165,7 +165,7 @@ public class FrescoImageLoader implements cn.finalteam.galleryfinal.ImageLoader 
 
 
         if (TextUtils.isEmpty(path)){
-            loadResPic(context,draweeView, R.drawable.xiangji);
+            loadResDrawablePic(context,draweeView, R.drawable.xiangji);
         }else {
             ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                     .setResizeOptions(resizeOptions)
@@ -186,7 +186,7 @@ public class FrescoImageLoader implements cn.finalteam.galleryfinal.ImageLoader 
      * @param simpleDraweeView
      * @param id
      */
-    public static void loadResPic(Context context, SimpleDraweeView simpleDraweeView, int id) {
+    public static void loadResDrawablePic(Context context, SimpleDraweeView simpleDraweeView, int id) {
         Uri uri = Uri.parse("res://" +
                 context.getPackageName() +
                 "/" + id);
