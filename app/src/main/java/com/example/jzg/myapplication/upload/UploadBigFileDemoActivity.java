@@ -36,8 +36,8 @@ public class UploadBigFileDemoActivity extends BaseActivity<UploadBigFilePresent
 
     public void upload(View view){
         MyToast.showShort("大文件切片上传");
-        //不管是最开始 还是续传都是调用此两步方法
-//        mPresenter.initData("666");
+        //不管是最开始 还是续传都是调用此两步方法，其他什么都不用管，内部已封装好。仅仅是大文件和压缩zip的存储路径需自调而已。
+//        mPresenter.initData("666"); 传入当前传输任务标识 taskId
 //        mPresenter.zipUpload(this);
     }
 

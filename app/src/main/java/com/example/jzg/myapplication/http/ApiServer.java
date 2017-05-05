@@ -54,5 +54,5 @@ public interface ApiServer {
     @Multipart
 //    Observable<ResponseJson<String>> uploadFileInfo(@FieldMap Map<String, String> options) ;
     Observable<Upload> uploadFileInfo(@QueryMap Map<String, String> options,
-                                      @PartMap Map<String, RequestBody> externalFileParameters) ;
+                                      @PartMap Map<String, RequestBody> externalFileParameters);
 }

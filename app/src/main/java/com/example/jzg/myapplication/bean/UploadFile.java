@@ -2,7 +2,7 @@ package com.example.jzg.myapplication.bean;
 
 /**
  * 郑有权
- *
+ * 对上传文件做好记录工作
  */
 public class UploadFile {
 

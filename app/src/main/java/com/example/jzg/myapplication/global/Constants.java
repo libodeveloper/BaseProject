@@ -2,6 +2,8 @@ package com.example.jzg.myapplication.global;
 
 import android.os.Environment;
 
+import com.example.jzg.myapplication.utils.FileUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +21,19 @@ public  class Constants {
     public static final String DateActivityTowaitActivity = "DateActivityTowaitActivity";
     public static final int waitActivityToDateActivity = 0x00000020;
     public static final String ROOT_DIR = Environment.getExternalStorageDirectory()+"/JzgPad2";
+
+    /**
+     * Created by 李波 on 2017/5/5.
+     * 大文件上传
+     * 大文件的原始 储存目录 往下还有层 taskid 目录 根据传值动态改变
+     */
+    public static final String bigFilePath    = FileUtils.SDCARD_PAHT + "/Upload/bigFilePath/";
+    /**
+     * Created by 李波 on 2017/5/5.
+     * 大文件上传
+     * zip压缩包的 存储目录 往下还有层 taskid 目录 根据传值动态改变
+     */
+    public static final String zipCatalogPath = FileUtils.SDCARD_PAHT + "/Upload/zipCatalogPath/";
 
     /**
      * Created by 李波 on 2016/12/2.
