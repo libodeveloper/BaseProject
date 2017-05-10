@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -30,6 +31,7 @@ import com.example.jzg.myapplication.R;
 import com.example.jzg.myapplication.global.Constants;
 import com.facebook.common.util.UriUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
@@ -44,6 +46,7 @@ import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import cn.finalteam.galleryfinal.widget.GFImageView;
+import me.relex.photodraweeview.PhotoDraweeView;
 
 /**
  * Desction:fresco image loader
@@ -180,6 +183,40 @@ public class FrescoImageLoader implements cn.finalteam.galleryfinal.ImageLoader 
         }
     }
     //----------------------------------------------------------------  -> 李波 on 2016/12/2.
+
+    public static void displayImageBig(Context context, final PhotoDraweeView draweeView, String path) {
+        Uri uri = Uri.parse("");   //初始化为空，如果地址为空，或地址错误就让其加载失败，刷新显示失败图片。
+        if (draweeView == null)
+            return;
+
+        if (path != null && path.startsWith("http")) {
+            uri = Uri.parse(path);
+        } else if (path != null && path.startsWith(Environment.getExternalStorageDirectory() + "")) {
+            uri = Uri.parse("file://" + path);
+        }
+
+
+        if (TextUtils.isEmpty(path)) {
+            loadResDrawablePic(context, draweeView, R.drawable.xiangji);
+        } else {
+            PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
+            controller.setUri(uri);
+            controller.setOldController(draweeView.getController());
+            controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
+                @Override
+                public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                    super.onFinalImageSet(id, imageInfo, animatable);
+                    if (imageInfo == null || draweeView == null) {
+                        return;
+                    }
+                    draweeView.update(imageInfo.getWidth(), imageInfo.getHeight());
+                }
+            });
+            draweeView.setController(controller.build());
+        }
+
+    }
+
     /**
      * 加载本地图片（drawable图片）
      * @param context

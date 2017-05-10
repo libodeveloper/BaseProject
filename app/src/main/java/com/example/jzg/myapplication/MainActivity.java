@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.jzg.myapplication.base.BaseActivity;
+import com.example.jzg.myapplication.cameracustom.DemoCameraActivity;
 import com.example.jzg.myapplication.convenientbanner.BannerActivity;
 import com.example.jzg.myapplication.horizontalverticalscroll.AdmixedContrastActivity;
 import com.example.jzg.myapplication.popWindow.PopwindowUtils;
@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btBigFileUpload;
     @BindView(R.id.bt_banner)
     Button btBanner;
+    @BindView(R.id.bt_custom_camera)
+    Button btCustomCamera;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @OnClick({R.id.bt_recyclerView, R.id.bt_tabLayout_ViewPager, R.id.bt_TagFlowLayout, R.id
             .bt_slidingmenu, R.id.bt_DrawerLayout_slidingmenu, R.id.bt_right, R.id.bt_left, R.id
-            .bt_linkage, R.id.bt_selecet_pic, R.id.bt_bigFile_upload,R.id.bt_banner})
+            .bt_linkage, R.id.bt_selecet_pic, R.id.bt_bigFile_upload, R.id.bt_banner,R.id.bt_custom_camera})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_recyclerView:
@@ -115,6 +117,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_banner:
                 Intent i9 = new Intent(this, BannerActivity.class);
                 startActivity(i9);
+                break;
+            case R.id.bt_custom_camera:
+                Intent i10 = new Intent(this, DemoCameraActivity.class);
+                startActivity(i10);
                 break;
         }
     }

@@ -1,5 +1,7 @@
 package com.example.jzg.myapplication.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -73,6 +75,12 @@ public class StringHelper {
         return  str;
     }
 
-
+    public static boolean isImage(String pathName){
+        Bitmap drawable = BitmapFactory.decodeFile(pathName);
+        if(drawable == null){
+            return false;
+        }
+        return  true;
+    }
 
 }

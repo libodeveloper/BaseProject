@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_picture_zoom"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    >
+
+
+    <com.example.jzg.myapplication.view.MyPhotoView
+        android:id="@+id/vPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.example.jzg.myapplication.view.MyPhotoView>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black_overlay_33">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="13dp"
+            android:src="@drawable/ic_gf_back"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:text="图片浏览"/>
+        <TextView
+            android:id="@+id/tvRecapture"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="重拍"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:id="@+id/tvDel"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="删除"
+            android:gravity="center"
+            android:layout_toLeftOf="@+id/tvRecapture"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:layout_marginRight="10dp"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

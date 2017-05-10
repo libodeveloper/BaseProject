@@ -20,7 +20,7 @@ public  class Constants {
     //车系头部信息位置
     public static final String DateActivityTowaitActivity = "DateActivityTowaitActivity";
     public static final int waitActivityToDateActivity = 0x00000020;
-    public static final String ROOT_DIR = Environment.getExternalStorageDirectory()+"/JzgPad2";
+    public static final String ROOT_DIR = Environment.getExternalStorageDirectory()+"/CameraPhoto";
 
     /**
      * Created by 李波 on 2017/5/5.
@@ -58,14 +58,6 @@ public  class Constants {
     public static final String IS_TITLE = "istitle";
 
 
-    //我的任务列表按钮
-    public static final int BACK = 0;
-    public static final int CONTINUEDETECTION = 1;
-    public static final int CHECKREPORT = 2;
-    public static final int MODIFICATION = 3;
-    public static final int CHECKREASON = 4;
-    public static final int UPLOAD = 5;
-    public static final int START = 6;
 
     /**
      * 屏幕宽高以备适配使用
@@ -90,8 +82,9 @@ public  class Constants {
 
     public static final int CAPTURE_TYPE_SINGLE = 10081;//单拍
     public static final int CAPTURE_TYPE_MULTI = 10082;//连拍
+    public static final int CAPTURE_TYPE_MAX = 10083;//无限连拍
     public static final String CAPTURE_TYPE = "capture_type";//拍摄模式
-
+    public static final String TEMP_TAKE_PHOTO_DIR = "PHOTO";//拍照后保存的位置
 
 
 

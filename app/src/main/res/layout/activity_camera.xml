@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/ll_control"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:id="@+id/cameraPreview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_frame"
+                android:layout_above="@+id/rv"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_alignParentBottom="true"
+                android:background="#33000000"
+                android:scrollbars="none"/>
+
+
+            <View
+                android:id="@+id/focus_index"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_above="@+id/rv"
+                android:background="@drawable/cam_focus"
+                android:visibility="invisible"
+                />
+
+            <SeekBar
+                android:id="@+id/seekbar"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:layout_alignLeft="@+id/focus_index"
+                android:layout_alignRight="@+id/focus_index"
+                android:layout_below="@+id/focus_index"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:maxHeight="40dp"
+                android:minHeight="40dp"
+                android:visibility="invisible"
+
+
+                />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_toLeftOf="@+id/ll_control"
+        android:background="#88000000">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@mipmap/ic_back"/>
+
+        <TextView
+            android:id="@+id/tv_photo_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_control"
+        android:layout_width="84dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="#000000"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:id="@+id/ll_flash"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/button_flash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/btn_camera_flash_off"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_camera"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/button_camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/btn_camera_turn_n"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAlbum"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@null"
+                android:text="相册"
+                android:textColor="#ffffff"/>
+
+            <Button
+                android:id="@+id/btnHDR"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@null"
+                android:text="HDR"
+                android:textColor="#ffffff"
+                android:visibility="gone"
+                />
+
+            <Button
+                android:id="@+id/btnWhiteBalance"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@null"
+                android:text="白平衡"
+                android:textColor="#ffffff"
+                android:visibility="gone"
+                />
+
+            <ImageView
+                android:id="@+id/button_capture"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_shutter"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlBigPreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:visibility="gone">
+
+
+        <me.relex.photodraweeview.PhotoDraweeView
+            android:id="@+id/photoDraweeView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:failureImageScaleType="centerInside"
+            app:placeholderImageScaleType="fitCenter"
+            app:progressBarAutoRotateInterval="1000"
+            app:progressBarImageScaleType="centerInside"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_alignParentBottom="true"
+            android:background="#aa000000">
+
+            <ImageView
+                android:id="@+id/ivRecap"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_recapture"
+                />
+
+            <ImageView
+                android:id="@+id/ivOK"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/ic_ok"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:visibility="gone"
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+              <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/tv_TEXT"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="123123"
+                        android:padding="10dp"/>
+             </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</RelativeLayout>

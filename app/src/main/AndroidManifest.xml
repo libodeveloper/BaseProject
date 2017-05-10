@@ -59,7 +59,19 @@
         <activity android:name="com.example.jzg.myapplication.horizontalverticalscroll.AdmixedContrastActivity"></activity>
         <activity android:name="com.example.jzg.myapplication.convenientbanner.PhotoForNetActivity"></activity>
         <activity android:name="com.example.jzg.myapplication.convenientbanner.BannerActivity"></activity>
-
+        <activity android:name="com.example.jzg.myapplication.cameracustom.DemoCameraActivity"
+                  android:screenOrientation="landscape"
+                  android:configChanges="orientation|keyboardHidden|screenSize"></activity>
+        <activity
+            android:name="com.example.jzg.myapplication.cameracustom.CameraActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
+        <activity
+            android:name="com.example.jzg.myapplication.cameracustom.PictureZoomActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
     </application>
 
 </manifest>

@@ -93,6 +93,13 @@
         android:textAllCaps="false"
         android:text="banner轮播图"/>
 
+    <Button
+        android:id="@+id/bt_custom_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="自定义相机(单拍 + 连拍)"/>
+
     </LinearLayout>
    </ScrollView>
 </LinearLayout>
