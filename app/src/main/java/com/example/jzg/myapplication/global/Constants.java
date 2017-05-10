@@ -60,7 +60,7 @@ public  class Constants {
 
 
     /**
-     * 屏幕宽高以备适配使用
+     * 屏幕宽高以备适配使 用
      */
     public static int ScreenWidth;
     public static int ScreenHeight;
