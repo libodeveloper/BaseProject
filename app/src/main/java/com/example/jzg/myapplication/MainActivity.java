@@ -7,8 +7,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.jzg.myapplication.cameracustom.CameraActivity;
 import com.example.jzg.myapplication.cameracustom.DemoCameraActivity;
 import com.example.jzg.myapplication.convenientbanner.BannerActivity;
+import com.example.jzg.myapplication.global.Constants;
 import com.example.jzg.myapplication.horizontalverticalscroll.AdmixedContrastActivity;
 import com.example.jzg.myapplication.popWindow.PopwindowUtils;
 import com.example.jzg.myapplication.recyclerview.RecyclerViewActivity;

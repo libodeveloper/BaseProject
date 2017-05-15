@@ -58,7 +58,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     public void surfaceCreated(SurfaceHolder holder) {
         Log.e(TAG, "surfaceCreated()" + mCamera);
         if(mCamera==null){
-            Toast.makeText(activity,"初始化相机预览失败",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(activity,"初始化相机预览失败",Toast.LENGTH_SHORT).show();
             return;
         }
         // The Surface has been created, now tell the camera where to draw the preview.

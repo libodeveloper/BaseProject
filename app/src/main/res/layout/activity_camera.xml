@@ -63,8 +63,16 @@
                 android:minHeight="40dp"
                 android:visibility="invisible"
 
-
                 />
+
+            <!-- 按键 -->
+            <!--<View
+                android:id="@+id/vw_camera"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"/>-->
+
         </RelativeLayout>
 
 
@@ -99,7 +107,7 @@
 
     <LinearLayout
         android:id="@+id/ll_control"
-        android:layout_width="84dp"
+        android:layout_width="1px"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:background="#000000"
@@ -233,23 +241,25 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:visibility="gone"
+        android:background="#CEB785"
         >
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-              <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
                     <TextView
                         android:id="@+id/tv_TEXT"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="123123"
                         android:padding="10dp"/>
-             </RelativeLayout>
         </ScrollView>
     </RelativeLayout>
+
+    <View
+        android:id="@+id/vw_camera"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

@@ -35,17 +35,17 @@
     <application
         android:name="com.example.jzg.myapplication.app.SysApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/dao"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <activity android:name="com.example.jzg.myapplication.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
 
         <activity android:name=".recyclerview.RecyclerViewActivity"></activity>
@@ -60,16 +60,20 @@
         <activity android:name="com.example.jzg.myapplication.convenientbanner.PhotoForNetActivity"></activity>
         <activity android:name="com.example.jzg.myapplication.convenientbanner.BannerActivity"></activity>
         <activity android:name="com.example.jzg.myapplication.cameracustom.DemoCameraActivity"
-                  android:screenOrientation="landscape"
+                  android:screenOrientation="portrait"
                   android:configChanges="orientation|keyboardHidden|screenSize"></activity>
         <activity
             android:name="com.example.jzg.myapplication.cameracustom.CameraActivity"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            />
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.example.jzg.myapplication.cameracustom.PictureZoomActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
     </application>

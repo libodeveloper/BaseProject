@@ -3,6 +3,7 @@ apply plugin: 'android-apt'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
+
     defaultConfig {
         applicationId "com.example.jzg.myapplication"
         minSdkVersion 15
@@ -11,12 +12,57 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+
+    signingConfigs {
         release {
+            storeFile file("libo.keystore.jks")
+            storePassword KEYSTORE_PASSWORD
+            keyAlias "libo"
+            keyPassword KEY_PASSWORD
+        }
+    }
+    productFlavors {
+        official {}
+    }
+
+    buildTypes {
+
+        debug {
+            //优化APK
+            zipAlignEnabled true
+            //移除无用的resources文件
+            shrinkResources false
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        release {
+
+            zipAlignEnabled true
+            shrinkResources false
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variants ->
+                variants.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = "baseproject" + "_v${defaultConfig.versionName}_${releaseTime()}_${variants.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
     }
+
+
+}
+
+
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
 dependencies {

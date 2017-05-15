@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.Service;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -58,6 +60,7 @@ import com.example.jzg.myapplication.utils.MyToast;
 import com.example.jzg.myapplication.utils.ScreenSwitchUtils;
 import com.example.jzg.myapplication.utils.ScreenUtil;
 import com.example.jzg.myapplication.utils.StringHelper;
+import com.example.jzg.myapplication.utils.StringUtil;
 import com.example.jzg.myapplication.utils.UIUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.zhy.base.adapter.recyclerview.OnItemClickListener;
@@ -72,11 +75,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.relex.photodraweeview.PhotoDraweeView;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static android.hardware.Camera.Parameters.SCENE_MODE_AUTO;
@@ -93,6 +100,8 @@ public class CameraActivity extends AppCompatActivity {
     public static final int MEDIA_TYPE_IMAGE = 1;
     @BindView(R.id.tv_TEXT)
     TextView tvTEXT;
+    @BindView(R.id.vw_camera)
+    View vwCamera;
     private Camera mCamera;
     private CameraPreview mPreview;
     //屏幕宽高
@@ -153,6 +162,8 @@ public class CameraActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private int surfaceViewW, surfaceViewH;
 
+    private int cameraTime = 0;
+    private Subscription subscribe;
     /**
      * Created by 李波 on 2017/5/10.
      * 是否加入拍照后的预览界面 带 重拍 + 确定 功能
@@ -184,7 +195,7 @@ public class CameraActivity extends AppCompatActivity {
         //隐藏ationBar
         if (getSupportActionBar() != null) getSupportActionBar().hide();
         //横屏
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_camera);
         ButterKnife.bind(this);
         statusBarHeight = ScreenUtil.getStatusBarHeight(this);
@@ -195,14 +206,20 @@ public class CameraActivity extends AppCompatActivity {
         curPhoto = getIntent().getIntExtra("position", 0);
         captureType = getIntent().getIntExtra(Constants.CAPTURE_TYPE, 0);//显示拍摄模式，是单拍还是连拍
 
-        if (captureType == Constants.CAPTURE_TYPE_MAX){
+        captureType = Constants.CAPTURE_TYPE_MAX;
+
+        String textContent = StringUtil.getFromAssets("lzddj.txt",this);
+        tvTEXT.setText(textContent);
+
+
+        if (captureType == Constants.CAPTURE_TYPE_MAX) {
             pictureItems = new ArrayList<>();
-            pictureItems.add(new PictureItem("1","第1张",""));
+            pictureItems.add(new PictureItem("1", "第1张", ""));
             tvPhotoName.setText(pictureItems.get(curPhoto).getPicName());
-        }else {
+        } else {
             if (pictureItems != null && pictureItems.size() > 0) {
                 tvPhotoName.setText(pictureItems.get(curPhoto).getPicName());
-            }else {
+            } else {
                 finish();
                 return;
             }
@@ -213,7 +230,7 @@ public class CameraActivity extends AppCompatActivity {
         String taskDir = Constants.ROOT_DIR + File.separator + taskId;
         FileUtils.createOrExistsDir(new File(taskDir));
 
-        showTips();
+//        showTips();
 
         //检查设备是否有摄像头
         boolean hasCamera = checkCameraHardware(this);
@@ -239,6 +256,27 @@ public class CameraActivity extends AppCompatActivity {
 
         reSizeView();
         setPreviewAdapter();
+
+        vwCamera.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //点击了拍照，相机就不再处在预览状态了，所以就不能再点击屏幕进行自动对焦了
+                /**震动服务*/
+//                Vibrator vib = (Vibrator)CameraActivity.this.getSystemService(Service.VIBRATOR_SERVICE);
+//                vib.vibrate(500);//只震动一秒，一次
+//                long[] pattern = {1000,2000};
+                //两个参数，一个是自定义震动模式，
+                //数组中数字的含义依次是静止的时长，震动时长，静止时长，震动时长。。。时长的单位是毫秒
+                //第二个是“是否反复震动”,-1 不重复震动
+                //第二个参数必须小于pattern的长度，不然会抛ArrayIndexOutOfBoundsException
+//                vib.vibrate(pattern, 1);
+
+                cameraTime = 0;
+                mPreview.setIsPreviewing(false);
+                takePictureFormCamera();
+                return true;
+            }
+        });
 
     }
 
@@ -270,7 +308,7 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.iv_back, R.id.btnAlbum, R.id.ll_camera, R.id.button_capture, R.id.ll_flash, R
-            .id.ivRecap, R.id.ivOK, R.id.btnHDR, R.id.btnWhiteBalance})
+            .id.ivRecap, R.id.ivOK, R.id.btnHDR, R.id.btnWhiteBalance,R.id.vw_camera})
     public void onClick(View view) {
         if (mCamera == null) {
             return;
@@ -294,10 +332,13 @@ public class CameraActivity extends AppCompatActivity {
             case R.id.ll_camera:
                 switchCamera();
                 break;
-            case R.id.button_capture:
+            case R.id.button_capture: //拍照
                 //点击了拍照，相机就不再处在预览状态了，所以就不能再点击屏幕进行自动对焦了
                 mPreview.setIsPreviewing(false);
                 takePictureFormCamera();
+                break;
+            case R.id.vw_camera: //拍照
+
                 break;
             case R.id.ll_flash:
                 toggleFlash(p, p.getFlashMode());
@@ -354,9 +395,9 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void call(Boolean granted) {
                         if (granted) {
-                            focusIndex.setVisibility(View.GONE);
-                            mCamera.takePicture(null, null, captrueCallback);
-                            //autoFocusTakePic();
+//                            focusIndex.setVisibility(View.GONE);
+//                            mCamera.takePicture(null, null, captrueCallback);
+                            autoFocusTakePic();
                         } else {
                             MyToast.showLong("请在设置-权限管理中开启拍照和SD卡读写授权后重试!");
                             isTakingPhoto = false;
@@ -365,9 +406,9 @@ public class CameraActivity extends AppCompatActivity {
                 });
             } else {
 
-                focusIndex.setVisibility(View.GONE);
-                mCamera.takePicture(null, null, captrueCallback);
-                //autoFocusTakePic();
+//                focusIndex.setVisibility(View.GONE);
+//                mCamera.takePicture(null, null, captrueCallback);
+                autoFocusTakePic();
             }
         } catch (Exception e) {
             LogUtil.e("拍照", "拍照出错" + e.getMessage());
@@ -384,6 +425,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onAutoFocus(boolean success, Camera camera) {
                 try {
+                    focusIndex.setVisibility(View.GONE);
                     mCamera.takePicture(null, null, captrueCallback);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -414,30 +456,35 @@ public class CameraActivity extends AppCompatActivity {
         if (mCamera == null) {
             return;
         }
-        if (Camera.Parameters.FLASH_MODE_OFF.equals(cameraFlashMode)) {
-            p.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
-            flashButton.setImageResource(R.mipmap.btn_camera_flash_on);
-            saveFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-        } else if (Camera.Parameters.FLASH_MODE_ON.equals(cameraFlashMode)) {
-            p.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
-            flashButton.setImageResource(R.mipmap.btn_camera_flash_auto);
-            saveFlashMode(Camera.Parameters.FLASH_MODE_ON);
-        } else if (Camera.Parameters.FLASH_MODE_AUTO.equals(cameraFlashMode)) {
-            p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-            flashButton.setImageResource(R.mipmap.btn_camera_flash_torch);
-            saveFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
-        } else if (Camera.Parameters.FLASH_MODE_TORCH.equals(cameraFlashMode)) {
-            p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            flashButton.setImageResource(R.mipmap.btn_camera_flash_off);
-            saveFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-        } else {
-            Toast.makeText(this, "Flash mode setting is not supported.", Toast.LENGTH_SHORT).show();
-        }
-        if (mCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            flashButton.setImageResource(R.mipmap.btn_camera_flash_off);
-            saveFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
-        }
+//        if (Camera.Parameters.FLASH_MODE_OFF.equals(cameraFlashMode)) {
+//            p.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+//            flashButton.setImageResource(R.mipmap.btn_camera_flash_on);
+//            saveFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+//        } else if (Camera.Parameters.FLASH_MODE_ON.equals(cameraFlashMode)) {
+//            p.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+//            flashButton.setImageResource(R.mipmap.btn_camera_flash_auto);
+//            saveFlashMode(Camera.Parameters.FLASH_MODE_ON);
+//        } else if (Camera.Parameters.FLASH_MODE_AUTO.equals(cameraFlashMode)) {
+//            p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+//            flashButton.setImageResource(R.mipmap.btn_camera_flash_torch);
+//            saveFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+//        } else if (Camera.Parameters.FLASH_MODE_TORCH.equals(cameraFlashMode)) {
+//            p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+//            flashButton.setImageResource(R.mipmap.btn_camera_flash_off);
+//            saveFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+//        } else {
+//            Toast.makeText(this, "Flash mode setting is not supported.", Toast.LENGTH_SHORT).show();
+//        }
+//        if (mCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+//            p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+//            flashButton.setImageResource(R.mipmap.btn_camera_flash_off);
+//            saveFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+//        }
+
+        //闪光灯直接置为关闭状态
+
+
+        p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
         mCamera.setParameters(p);
     }
 
@@ -604,8 +651,8 @@ public class CameraActivity extends AppCompatActivity {
      * 拍照确认后压缩照片 并 保存到指定位置
      */
     private void compress(String imgPath, int compressGear) {
-        ImageCompressor.get(CameraActivity.this).setFilename("temp")
-                .load(new File(imgPath))    //传人要压缩的图片
+        ImageCompressor.get(CameraActivity.this).setFilename("temp").load(new File(imgPath))
+                //传人要压缩的图片
                 .putGear(compressGear)      //设定压缩档次，默认三挡
                 .setCompressListener(new OnCompressListener() { //设置回调
                     @Override
@@ -616,15 +663,18 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(File file) {  //压缩成功后保存到指定位置
                         LogUtil.e(TAG, "src pic:" + file.length() / 1024 + "kb");
-                        String bigPic = Constants.ROOT_DIR + File.separator + taskId + File.separator;
-                        String fileName = String.valueOf(pictureItems.get(curPhoto).getPicId()) +".jpg";
+                        String bigPic = Constants.ROOT_DIR + File.separator + taskId + File
+                                .separator;
+                        String fileName = String.valueOf(pictureItems.get(curPhoto).getPicId()) +
+                                ".jpg";
 
                         String fullPath = bigPic + fileName; //压缩后保存的路径
                         LogUtil.e(TAG, "final Path=" + bigPic + fileName);
 
                         if (FileUtils.createOrExistsDir(bigPic)) {
                             if (FileUtils.isFileExists(fullPath))
-                                FrescoCacheHelper.clearSingleCacheByUrl(fullPath, true);  //如果此路径有缓存清空
+                                FrescoCacheHelper.clearSingleCacheByUrl(fullPath, true);
+                            //如果此路径有缓存清空
 
                             FileUtils.copyFile(file, new File(fullPath)); //把压缩成功后的图片保存到指定路径
 
@@ -923,7 +973,7 @@ public class CameraActivity extends AppCompatActivity {
                     previewAdapter.setCurrPos(position);
                     tvPhotoName.setText(pictureItems.get(position).getPicName());
                     curPhoto = position;
-                    showTips();
+//                    showTips();
                 }
 
             }
@@ -937,6 +987,7 @@ public class CameraActivity extends AppCompatActivity {
 
     /**
      * RecyclerView 移动到当前位置，
+     *
      * @param manager       设置RecyclerView对应的manager
      * @param mRecyclerView 当前的RecyclerView
      * @param n             要跳转的位置
@@ -978,13 +1029,15 @@ public class CameraActivity extends AppCompatActivity {
         int rightWidth = screenWidth - preViewWidth;
 
         //仿照系统相机，宽度比为4:3，高是屏幕的高度，根据高度和宽高比计算出宽度
-        surfaceViewW = screenHeight / 3 * 4;
+//        surfaceViewW = screenHeight / 3 * 4;
+//        surfaceViewH = screenHeight;
+        surfaceViewW = screenWidth;
         surfaceViewH = screenHeight;
 
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) llControl
-                .getLayoutParams();
-        params.width = screenWidth - surfaceViewW;
-        llControl.setLayoutParams(params);
+//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) llControl
+//                .getLayoutParams();
+//        params.width = screenWidth - surfaceViewW;
+//        llControl.setLayoutParams(params);
 
     }
 
@@ -1049,17 +1102,25 @@ public class CameraActivity extends AppCompatActivity {
                 LogUtil.e(TAG, "相机取消自动聚焦出错" + e.getMessage());
             }
 
+
             mPreview.setIsPreviewing(true);
             isTakingPhoto = false;
             photoDraweeView.setPhotoUri(Uri.parse("file://" + pictureFile.getAbsolutePath()));
             LogUtil.e(TAG, "file: " + pictureFile.getAbsolutePath());
             photoDraweeView.setTag(pictureFile.getAbsolutePath());
 
-            if (isOpenPreview) {
-                rlBigPreview.setVisibility(View.VISIBLE);
-            }else{
-                compressAndSavePhoto();
-            }
+            showPhoto(pictureFile.getAbsolutePath());
+            take2Next();
+
+              cameraTime++;
+              if (cameraTime<2){
+                  wait2s();
+              }
+//            if (isOpenPreview) {
+//                rlBigPreview.setVisibility(View.VISIBLE);
+//            } else {
+//                compressAndSavePhoto();
+//            }
         }
     };
 
@@ -1115,9 +1176,9 @@ public class CameraActivity extends AppCompatActivity {
     private void showPhoto(String path) {
 
         if (captureType == Constants.CAPTURE_TYPE_MAX) {
-            String lastId = pictureItems.get(pictureItems.size()-1).getPicId();
-            int addId  = Integer.valueOf(lastId)+1;
-            pictureItems.add(new PictureItem(addId+"","第" + addId + "张",""));
+            String lastId = pictureItems.get(pictureItems.size() - 1).getPicId();
+            int addId = Integer.valueOf(lastId) + 1;
+            pictureItems.add(new PictureItem(addId + "", "第" + addId + "张", ""));
         }
 
         if (curPhoto < pictureItems.size() - 1) {
@@ -1350,12 +1411,13 @@ public class CameraActivity extends AppCompatActivity {
         params.setPreviewSize(preViewWidth, preViewHeight);
         LogUtil.e(TAG, "cameraId :" + mCameraId + "  selected PreviewSize : width: " +
                 previewSize.width + "   height: " + previewSize.height);
-        //------------------------------------设置最佳输出分辨率---------------------------------
+
+        //-----------------------------设置最佳图片输出分辨率---------------------------------
         pictureWidth = 0;
         pictureHeight = 0;
         List<Camera.Size> sizeList = params.getSupportedPictureSizes();
         sort(sizeList);
-        Camera.Size pictureSize = getBestCameraSize(sizeList, 2048, 1536);
+        Camera.Size pictureSize = getBestCameraSize(sizeList, 2240, 3968);
         pictureWidth = pictureSize.width;
         pictureHeight = pictureSize.height;
 /*        pictureWidth = sizeList.get(0).width;
@@ -1386,6 +1448,10 @@ public class CameraActivity extends AppCompatActivity {
 // .getMinExposureCompensation());
 //        System.out.println("getExposureCompensationStep======="+params
 // .getExposureCompensationStep());
+
+        //设置横竖屏，否则竖屏拍出来的照片还是横着的
+        params.set("orientation", "portrait");
+        params.set("rotation", 90);
         camera.setParameters(params);
 
         //设置相机预览成功后的回调
@@ -1582,7 +1648,8 @@ public class CameraActivity extends AppCompatActivity {
      * @return
      */
     public String getFlashMode() {
-        SharedPreferences preferences = getSharedPreferences("Camera_FLASH_MODE", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("Camera_FLASH_MODE", Context
+                .MODE_PRIVATE);
         return preferences.getString("FLASH_MODE", Camera.Parameters.FLASH_MODE_AUTO);
     }
 
@@ -1614,7 +1681,7 @@ public class CameraActivity extends AppCompatActivity {
             photoDraweeView.setImageURI(Uri.parse(""));
             photoDraweeView.setTag("");
         } else {
-            if (captureType!=Constants.CAPTURE_TYPE_MAX) {
+            if (captureType != Constants.CAPTURE_TYPE_MAX) {
                 Intent intent = getIntent();
                 intent.putExtra("picList", pictureItems);
                 intent.putExtra(Constants.CAPTURE_TYPE, captureType);
@@ -1689,5 +1756,26 @@ public class CameraActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
 
+    }
+
+
+    //如等待 2秒 执行
+    private void wait2s(){
+        subscribe = Observable.timer(2, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        mPreview.setIsPreviewing(false);
+                        takePictureFormCamera();
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (subscribe!=null)
+            subscribe.unsubscribe();
     }
 }

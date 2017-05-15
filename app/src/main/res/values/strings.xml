@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">道</string>
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="check_net">请检查网络</string>

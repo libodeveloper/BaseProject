@@ -84,7 +84,7 @@ public  class Constants {
     public static final int CAPTURE_TYPE_MULTI = 10082;//连拍
     public static final int CAPTURE_TYPE_MAX = 10083;//无限连拍
     public static final String CAPTURE_TYPE = "capture_type";//拍摄模式
-    public static final String TEMP_TAKE_PHOTO_DIR = "PHOTO";//拍照后保存的位置
+    public static final String TEMP_TAKE_PHOTO_DIR = ".PHOTO";//拍照后保存的位置
 
 
 

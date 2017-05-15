@@ -10,6 +10,7 @@ import android.widget.Toast;
  * @desc:
  */
 public class MyToast {
+	private  static boolean isShow = false;
 	private static Toast toast;
 	public static void showLong(String content){
 		if(toast==null){
@@ -17,6 +18,7 @@ public class MyToast {
 		}else {
 			toast.setText(content);
 		}
+		if (isShow)
 		toast.show();
 
 	}
@@ -26,6 +28,7 @@ public class MyToast {
 		}else{
 			toast.setText(resId);
 		}
+		if (isShow)
 		toast.show();
 
 	}
@@ -36,6 +39,7 @@ public class MyToast {
 		}else{
 			toast.setText(content);
 		}
+		if (isShow)
 		toast.show();
 	}
 	public static void showLong(int resId){
@@ -44,6 +48,7 @@ public class MyToast {
 		}else{
 			toast.setText(resId);
 		}
+		if (isShow)
 		toast.show();
 	}
 }
