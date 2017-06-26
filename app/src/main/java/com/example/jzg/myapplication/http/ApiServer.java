@@ -2,6 +2,7 @@ package com.example.jzg.myapplication.http;
 
 
 
+import com.example.jzg.myapplication.app.UpdateApp;
 import com.example.jzg.myapplication.bean.Upload;
 import com.example.jzg.myapplication.bean.User;
 
@@ -55,4 +56,12 @@ public interface ApiServer {
 //    Observable<ResponseJson<String>> uploadFileInfo(@FieldMap Map<String, String> options) ;
     Observable<Upload> uploadFileInfo(@QueryMap Map<String, String> options,
                                       @PartMap Map<String, RequestBody> externalFileParameters);
+
+    /**
+     * Created by 李波 on 2017/5/15.
+     * 检测更新版本
+     */
+    @FormUrlEncoded
+    @POST("/APP/Config/GetVersion.ashx")
+    Observable<UpdateApp> isUpdate(@FieldMap Map<String, String> params);
 }

@@ -230,26 +230,4 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:visibility="gone"
-        >
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-              <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/tv_TEXT"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="123123"
-                        android:padding="10dp"/>
-             </RelativeLayout>
-        </ScrollView>
-    </RelativeLayout>
-
 </RelativeLayout>

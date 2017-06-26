@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.jzg.myapplication.app.SysApplication;
+import com.example.jzg.myapplication.app.UpdateManager;
 import com.example.jzg.myapplication.base.BaseActivity;
 import com.example.jzg.myapplication.bean.User;
 import com.example.jzg.myapplication.mvpview.ILogin;
@@ -59,6 +61,8 @@ public class DemoActivity extends BaseActivity<LoginPresenter> implements ILogin
         //请求网络
         mPresenter.login(userName, password, true);
 
+        //检测版本更新
+        checkUpdata();
     }
 
 
@@ -116,5 +120,13 @@ public class DemoActivity extends BaseActivity<LoginPresenter> implements ILogin
         }
     }
 
+    /**
+     * Created by 李波 on 2017/5/15.
+     * 检测版本更新
+     */
+    private void checkUpdata(){
+        if (SysApplication.networkAvailable)
+            UpdateManager.getUpdateManager().checkAppUpdate(this, false);
+    }
 
 }

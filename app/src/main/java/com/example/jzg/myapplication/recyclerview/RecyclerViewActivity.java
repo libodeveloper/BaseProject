@@ -50,13 +50,15 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
                 R.color.google_yellow
         );
         //Listview 效果
-        layoutManager = new LinearLayoutManager(this);
+//        layoutManager = new LinearLayoutManager(this);
 
         //GridView 效果
-//        layoutManager = new GridLayoutManager(this,3);
+        layoutManager = new GridLayoutManager(this,2);
 
          //横向滑动效果
+
 //      layoutManager = new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.HORIZONTAL);
+
 
         rvAdapter = new RvAdapter(this,list);
 

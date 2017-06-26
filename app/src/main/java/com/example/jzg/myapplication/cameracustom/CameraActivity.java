@@ -91,8 +91,6 @@ public class CameraActivity extends AppCompatActivity {
 
     private final int FLAG_CHOOCE_PICTURE = 1001;
     public static final int MEDIA_TYPE_IMAGE = 1;
-    @BindView(R.id.tv_TEXT)
-    TextView tvTEXT;
     private Camera mCamera;
     private CameraPreview mPreview;
     //屏幕宽高
@@ -1170,8 +1168,7 @@ public class CameraActivity extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE) {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp
-                    + ".jpg");
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp+ ".jpg");
         } else {
             return null;
         }
