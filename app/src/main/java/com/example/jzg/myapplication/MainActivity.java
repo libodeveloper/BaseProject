@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.jzg.myapplication.cameracustom.DemoCameraActivity;
 import com.example.jzg.myapplication.convenientbanner.BannerActivity;
+import com.example.jzg.myapplication.doublerecyclerview.DoubleRecyclerViewActivity;
 import com.example.jzg.myapplication.horizontalverticalscroll.AdmixedContrastActivity;
 import com.example.jzg.myapplication.popWindow.PopwindowUtils;
 import com.example.jzg.myapplication.recyclerview.RecyclerViewActivity;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btBanner;
     @BindView(R.id.bt_custom_camera)
     Button btCustomCamera;
+    @BindView(R.id.bt_Double_recyclerview)
+    Button bt_Double_recyclerview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @OnClick({R.id.bt_recyclerView, R.id.bt_tabLayout_ViewPager, R.id.bt_TagFlowLayout, R.id
+    @OnClick({R.id.bt_recyclerView, R.id.bt_Double_recyclerview,R.id.bt_tabLayout_ViewPager, R.id.bt_TagFlowLayout, R.id
             .bt_slidingmenu, R.id.bt_DrawerLayout_slidingmenu, R.id.bt_right, R.id.bt_left, R.id
             .bt_linkage, R.id.bt_selecet_pic, R.id.bt_bigFile_upload, R.id.bt_banner,R.id.bt_custom_camera})
     public void onClick(View view) {
@@ -75,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_recyclerView:
                 Intent i = new Intent(this, RecyclerViewActivity.class);
                 startActivity(i);
+                break;
+            case R.id.bt_Double_recyclerview:
+                Intent di = new Intent(this, DoubleRecyclerViewActivity.class);
+                startActivity(di);
                 break;
             case R.id.bt_tabLayout_ViewPager:
                 Intent ii = new Intent(this, TabLayoutViewPagerActivity.class);

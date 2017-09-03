@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.jzg.myapplication.recyclerview.RecyclerViewActivity">
+
+
+<!-- 如果用Scrollview 包裹吞滚动事件，用整体的滑动来 代替联动，能够实现
+效果，但面临加载过多的数据量，会造成毁灭性的卡顿-->
+    <!--<ScrollView
+        android:id="@+id/contentScrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffff"
+        android:fillViewport="true"
+        >-->
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@android:color/transparent">
+        <!--名称这列的ListView-->
+
+        <!-- 左边listview -->
+        <com.example.jzg.myapplication.view.CustomRecyclerView
+            android:id="@+id/contentListViewLeft"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"
+            android:fadingEdge="none"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollbars="none"
+            />
+
+
+        <!-- 右边listview -->
+
+        <com.example.jzg.myapplication.view.CustomRecyclerView
+            android:id="@+id/contentListViewRight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"
+            android:fadingEdge="none"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollbars="none"/>
+    </LinearLayout>
+<!--    </ScrollView>-->
+
+
+
+</LinearLayout>

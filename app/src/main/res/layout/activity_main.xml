@@ -19,6 +19,12 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="recyclerView"/>
+        <Button
+            android:id="@+id/bt_Double_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="双列表联动"/>
     <Button
         android:id="@+id/bt_tabLayout_ViewPager"
         android:layout_width="match_parent"
@@ -99,6 +105,7 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="自定义相机(单拍 + 连拍)"/>
+
 
     </LinearLayout>
    </ScrollView>

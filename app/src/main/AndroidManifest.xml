@@ -49,6 +49,7 @@
         </activity>
 
         <activity android:name=".recyclerview.RecyclerViewActivity"></activity>
+        <activity android:name="com.example.jzg.myapplication.doublerecyclerview.DoubleRecyclerViewActivity"></activity>
         <activity android:name=".tablayoutviewpager.TabLayoutViewPagerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"></activity>
         <activity android:name=".tagflowlayout.TagFlowLayoutActivity"></activity>
