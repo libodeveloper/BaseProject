@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/CustomButtonW"
+    android:layout_height="@dimen/CustomButtonH">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/drawable_base"
+            >
+
+            <TextView
+                android:id="@+id/tvL"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/CustomButtonSize"
+                android:text="一"/>
+
+            <TextView
+                android:id="@+id/tvR"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/CustomButtonSize"
+                android:text="二"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvM"
+            android:layout_width="@dimen/CustomButtonM"
+            android:layout_height="match_parent"
+            android:background="@drawable/drawable_base_m"
+            android:text="一"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/title_bg_blue"
+            android:textSize="@dimen/CustomButtonSize"
+            />
+
+
+</RelativeLayout>

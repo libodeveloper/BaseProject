@@ -74,4 +74,10 @@
     <!--字体大小-->
     <dimen name="carTypeTextSize">12sp</dimen>
 
+    <!-- CustomButton -->
+    <dimen name="CustomButtonW">190dp</dimen>
+    <dimen name="CustomButtonH">35dp</dimen>
+    <dimen name="CustomButtonM">100dp</dimen>
+    <dimen name="CustomButtonSize">15sp</dimen>
+
 </resources>

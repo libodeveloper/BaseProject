@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+  <!-- 矩形内部填充色 #00000000透明-->
+    <solid android:color="#FFF" />
+    
+  <!-- 边框的宽度 和颜色 -->  
+    <!--<stroke android:width="1dip" android:color="#df22" />-->
+ 
+    
+  <!-- corners 这四个属性主要用来画纯圆 和画任意边角弧度。
+  		纯圆，四个属性就为控件宽高的一半 
+   		画圆打开此注释-->  
+  
+    <!-- <corners android:topLeftRadius="100dip" 
+        android:topRightRadius="100dip"
+         android:bottomLeftRadius="100dip" 
+         android:bottomRightRadius="100dip" /> -->
+    
+    
+    <!-- 圆角矩形的四个圆角的半径，此半径最大值为控件宽高的一半，此值为 0 那就是纯矩形
+	         画圆角矩形打开此注释  -->
+      <corners
+        android:radius="17dp"
+        />
+   
+     <!--  设置大小，如果没设置size大小，那么控件的大小必须明确设置值，如果是包裹内容无法显示，而填充父窗体会占据整个屏幕-->
+        <!-- <size 
+            android:width="100dp"
+            android:height="100dp"
+            /> -->
+            
+</shape>
+
+<!-- 特别说明：一切效果要以部署到真机为准，切勿直接在eclipse看效果，因为纯属扯蛋-->
