@@ -10,9 +10,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.jzg.myapplication.R;
+import com.example.jzg.myapplication.app.AppManager;
+import com.example.jzg.myapplication.app.SysApplication;
 
 import java.util.ArrayList;
 
@@ -33,7 +37,12 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_recyclerview);
+        AppManager.getAppManager().addActivity(this);
         list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             list.add(i+"");
@@ -66,6 +75,7 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(RecyclerViewActivity.this,"onItemClick"+position,Toast.LENGTH_SHORT).show();
+                SysApplication.getApp().showDialog();
             }
 
             @Override
@@ -212,4 +222,9 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getAppManager().finishActivity(this);
+    }
 }

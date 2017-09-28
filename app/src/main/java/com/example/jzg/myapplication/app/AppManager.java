@@ -17,7 +17,7 @@ import java.util.Stack;
 /**
  * Created by 李波 on 2017/1/20.
  *
- * app管理类负责创建 Activity 界面的栈内存，方便结束界面
+ * app管理类负责创建 Activity 界面的栈内存
  * 视情况而用
  */
 public class AppManager {
@@ -35,6 +35,7 @@ public class AppManager {
         return instance;
     }
 
+    //入栈加入集合
     public void addActivity(Activity activity) {
         if (activityStack == null) {
             activityStack = new Stack<Activity>();
@@ -42,6 +43,7 @@ public class AppManager {
         activityStack.add(activity);
     }
 
+    //获取当前Activity
     public Activity currentActivity() {
         Activity activity = activityStack.lastElement();
         return activity;
@@ -52,6 +54,7 @@ public class AppManager {
         finishActivity(activity);
     }
 
+    //出栈移出集合
     public synchronized void finishActivity(Activity activity) {
         if (activity != null) {
             activityStack.remove(activity);

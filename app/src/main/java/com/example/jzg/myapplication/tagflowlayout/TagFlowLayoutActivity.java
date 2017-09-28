@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jzg.myapplication.R;
+import com.example.jzg.myapplication.app.AppManager;
 import com.example.jzg.myapplication.app.SysApplication;
 import com.example.jzg.myapplication.global.Constants;
 import com.example.jzg.myapplication.tagflowlayout.widget.FlowLayout;
@@ -105,7 +106,7 @@ public class TagFlowLayoutActivity extends AppCompatActivity {
 //                }
 
                 if (tagView.isChecked()){ //选中
-
+                    SysApplication.getApp().showDialog();
                 }else {//未选中
 
                 }
@@ -200,6 +201,12 @@ public class TagFlowLayoutActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getAppManager().finishActivity(this);
     }
 
 }

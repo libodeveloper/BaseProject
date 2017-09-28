@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     >
-
-    <include layout="@layout/simple_title_layout" />
-
 
     <com.example.jzg.myapplication.view.ExtendedViewPager
         android:id="@+id/extendedVP"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:background="@color/black" />
 
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#11000000">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:onClick="goBack"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/goback" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:text="title"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+</RelativeLayout>

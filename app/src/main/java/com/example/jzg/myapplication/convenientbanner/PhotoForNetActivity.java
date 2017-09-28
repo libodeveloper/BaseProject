@@ -5,6 +5,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,12 +27,8 @@ import butterknife.OnClick;
 public class PhotoForNetActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.tvTitle)
-    TextView tvTitle;
-    @BindView(R.id.ivLeft)
-    ImageView ivLeft;
-    @BindView(R.id.ivRight)
-    ImageView ivRight;
+    @BindView(R.id.title)
+    TextView title;
     @BindView(R.id.extendedVP)
     ExtendedViewPager extendedVP;
 
@@ -40,6 +38,11 @@ public class PhotoForNetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager
+                .LayoutParams.FLAG_FULLSCREEN); //去掉状态栏，让界面全屏
+
         setContentView(R.layout.activity_photo);
         ButterKnife.bind(this);
         picList = (ArrayList<BannerBean>) getIntent().getSerializableExtra("piclists");
@@ -72,7 +75,7 @@ public class PhotoForNetActivity extends AppCompatActivity {
     private void setShoePerNum(int num) {
         num++;
         if (num <= 0) num = 1;
-        tvTitle.setText(num + "/" + picList.size());
+        title.setText(num + "/" + picList.size());
     }
 
     public void goBack(View view){

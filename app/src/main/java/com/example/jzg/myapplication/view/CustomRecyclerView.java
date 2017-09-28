@@ -12,7 +12,7 @@ import android.view.MotionEvent;
 
 public class CustomRecyclerView extends RecyclerView {
 
-    public boolean isOnTouch = true;
+    public boolean isOnTouch = true; //控制是否响应onTouc
 
     public CustomRecyclerView(Context context) {
         super(context);

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.jzg.myapplication.R;
+import com.example.jzg.myapplication.app.SysApplication;
 import com.example.jzg.myapplication.base.BaseActivity;
 import com.example.jzg.myapplication.bean.User;
 import com.example.jzg.myapplication.dialog.ActionSheet;
@@ -93,6 +94,7 @@ public class UploadDemoActivity extends BaseActivity<UploadPresenter> implements
 
     public void upload(View view) {
         ActionSheet.showSheet(this, this, "从相册选取", "拍照", "取消");
+
     }
 
     @Override
@@ -209,10 +211,4 @@ public class UploadDemoActivity extends BaseActivity<UploadPresenter> implements
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jzg.myapplication.R;
+import com.example.jzg.myapplication.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,6 +39,7 @@ public class TabLayoutViewPagerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tablayout_viewpager);
+        AppManager.getAppManager().addActivity(this);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
 

@@ -32,6 +32,8 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:name="com.example.jzg.myapplication.app.SysApplication"
         android:allowBackup="true"
@@ -48,7 +50,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".recyclerview.RecyclerViewActivity"></activity>
+        <activity android:name=".recyclerview.RecyclerViewActivity"
+                  ></activity>
         <activity android:name="com.example.jzg.myapplication.doublerecyclerview.DoubleRecyclerViewActivity"></activity>
         <activity android:name=".tablayoutviewpager.TabLayoutViewPagerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"></activity>
@@ -72,6 +75,11 @@
             android:name="com.example.jzg.myapplication.cameracustom.PictureZoomActivity"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            />
+        <activity
+            android:name="com.example.jzg.myapplication.dialogactivity.DialogActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.ActivityDialogStyle"
             />
     </application>
 

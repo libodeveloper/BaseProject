@@ -1,23 +1,41 @@
 package com.example.jzg.myapplication.app;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AppOpsManager;
 import android.app.Application;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.blankj.utilcode.utils.ScreenUtils;
 import com.blankj.utilcode.utils.Utils;
 import com.example.jzg.myapplication.bean.User;
 import com.example.jzg.myapplication.db.DBManager;
+import com.example.jzg.myapplication.dialog.DialogUtil;
+import com.example.jzg.myapplication.dialogactivity.DialogActivity;
 import com.example.jzg.myapplication.global.Constants;
 import com.example.jzg.myapplication.http.ApiServer;
 import com.example.jzg.myapplication.http.CustomerOkHttpClient;
 import com.example.jzg.myapplication.utils.ACache;
 import com.example.jzg.myapplication.utils.FrescoImageLoader;
+import com.example.jzg.myapplication.utils.MyToast;
 import com.github.pwittchen.reactivenetwork.library.ConnectivityStatus;
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.lang.reflect.Method;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import okhttp3.OkHttpClient;
@@ -59,6 +77,10 @@ public class SysApplication extends Application {
         MOBILE_INTERNET
     }
 
+    AlertDialog dialog;
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -81,8 +103,14 @@ public class SysApplication extends Application {
         CustomActivityOnCrash.install(this);  //崩溃日志
         //初始化Logger日志
 //        Logger.init("SysApplication") .methodCount(3).logTool(new AndroidLogTool()); // custom log tool, optional
+
+
     }
 
+
+    public static SysApplication getApp(){
+        return app;
+    }
 
     /**
      * 初始化网络监听
@@ -163,4 +191,16 @@ public class SysApplication extends Application {
     public static void setUser(User user) {
         SysApplication.user = user;
     }
+
+    /**
+     * Created by 李波 on 2017/9/25.
+     * 显示全局Dialog，需要当前的Activity 入栈 退出时 出栈
+     */
+    public void showDialog(){
+        Activity activity = AppManager.getAppManager().currentActivity();
+        Intent intent = new Intent(activity, DialogActivity.class);
+        activity.startActivity(intent);
+    }
+
+
 }

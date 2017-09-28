@@ -84,9 +84,9 @@ public class DoubleRecyclerViewActivity extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_DRAGGING){
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING){    //开始滚动
                     ((CustomRecyclerView)rightList).isOnTouch=false;
-                }else if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                }else if (newState == RecyclerView.SCROLL_STATE_IDLE){  //滚动结束
                     ((CustomRecyclerView)rightList).isOnTouch=true;
                 }
 
