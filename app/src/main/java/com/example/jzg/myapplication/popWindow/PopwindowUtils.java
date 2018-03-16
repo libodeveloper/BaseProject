@@ -4,19 +4,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
-import android.widget.TextView;
 
+import com.blankj.utilcode.utils.ScreenUtils;
 import com.example.jzg.myapplication.R;
+import com.example.jzg.myapplication.tablayoutview.TablayoutViewAdapter;
 import com.example.jzg.myapplication.utils.DensityUtil;
+
+import java.util.ArrayList;
 
 
 /**
@@ -36,6 +41,98 @@ public class PopwindowUtils {
 	public static final int SLIDINGMENU_LEFT = 0;
 	public static final int SLIDINGMENU_RIGHT = 1;
 
+
+	/**
+	 * Created by 李波 on 2018/3/16.
+	 * 从底部弹出的popwindow
+	 * tablayout + viewpager + view（轻量级模式 简单界面不必fragment）
+	 */
+	public static  void popWindowBottomToTop(final Context context,View view) {
+
+		if (popupWindow == null) {
+
+			//加载popwindow布局
+			View contentView = View.inflate(context,
+					R.layout.popwindow_leveldescription, null);
+			//设置布局里各种控件功能
+			TabLayout tabLayout = (TabLayout) contentView.findViewById(R.id.tabLayout);
+			ViewPager viewPager = (ViewPager) contentView.findViewById(R.id.viewPager);
+			ImageView imageView = (ImageView) contentView.findViewById(R.id.iv_close);
+
+
+			imageView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					dimssWindow();
+				}
+			});
+
+			//初始化view  -> 李波 on 2018/3/16.
+			View view1 = ((Activity)context).getLayoutInflater().inflate(R.layout.view1_layout, null);
+			View view2 = ((Activity)context).getLayoutInflater().inflate(R.layout.view2_layout, null);
+
+
+			ArrayList<String> titles = new ArrayList<>();
+			ArrayList<View> views = new ArrayList<>();
+
+			views.add(view1);
+			views.add(view2);
+
+
+			//设置viewpager每页对应的标题
+			titles.add("事故等级说明");
+			titles.add("综合车况等级说明");
+
+			TablayoutViewAdapter tablayoutViewAdapter = new TablayoutViewAdapter(views);
+			viewPager.setAdapter(tablayoutViewAdapter);
+
+			viewPager.setCurrentItem(0);
+			viewPager.setOffscreenPageLimit(2); //缓冲好4个来回切换时不必再重复创建
+
+			//此步有坑 会清除tabitem 如果用fragment模式 在adapter里 必须复写getPageTitle方法设置tabitem 否则 会不显示tabitem  -> 李波 on 2018/3/16.
+			tabLayout.setupWithViewPager(viewPager); //一步实现tablayout 与 viewpager的联动关联
+
+
+			//重点，如果是view模式 就必须在 tabLayout.setupWithViewPager(viewPager) 下面重新为tabitem赋值 否则会不显示 tabitem -> 李波 on 2018/3/16.
+			for (int i=0;i<tabLayout.getTabCount();i++) {
+				tabLayout.getTabAt(i).setText(titles.get(i));
+			}
+
+
+			int height = ScreenUtils.getScreenHeight()*3/4;
+			//初始化pop 注意：popwindow最好指定固定大小，否则无法显示，不能以为布局设置了大小就没事了。
+			//因为布局这时还没加载不知道大小,如果设置成-2 包裹 将造成无法显示问题
+			popupWindow = new PopupWindow(contentView, -1,height, true);
+			//注意了，popupwindow 播放动画的话，需要加上背景
+			popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+			//设置pop获取焦点，否则嵌套在它里面的listview的setOnItemClickListener无法获取焦点响应
+			popupWindow.setFocusable(true);
+
+			//设置滑动时的动画包括关闭时的动画
+			popupWindow.setAnimationStyle(R.style.AnimDown); //弹出时从底部往上弹出
+			//取出坐标，设置popupwindow的位置
+			popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+
+
+			//设置popwindow关闭时的监听
+			popupWindow.setOnDismissListener(new OnDismissListener() {
+				@Override
+				public void onDismiss() {
+					if (popupWindow != null) {
+						popupWindow.dismiss();
+						popupWindow = null;
+					}
+					//让屏幕回复不透明状态
+					backgroundAlpha((Activity) context, 1f);
+				}
+			});
+
+			//显示popwindow时让屏幕半透明，到达遮罩层的效果
+			backgroundAlpha((Activity) context, 0.5f);
+
+		}
+	}
 
 	public static  void popWindowSlidingMenu(final Context context,View view,int SlidingMenu) {
 
@@ -61,6 +158,7 @@ public class PopwindowUtils {
 				case SLIDINGMENU_LEFT:
 					//设置侧滑时的动画包括关闭时的动画
 					popupWindow.setAnimationStyle(R.style.AnimLeft);
+//					popupWindow.setAnimationStyle(R.style.AnimDown); 从下往上
 					//取出坐标，设置popupwindow的位置
 					popupWindow.showAtLocation(view, Gravity.LEFT, 0, 0);
 					break;

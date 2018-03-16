@@ -1,17 +1,8 @@
 package com.example.jzg.myapplication;
 
-import android.annotation.TargetApi;
-import android.app.AppOpsManager;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -26,14 +17,11 @@ import com.example.jzg.myapplication.popWindow.PopwindowUtils;
 import com.example.jzg.myapplication.recyclerview.RecyclerViewActivity;
 import com.example.jzg.myapplication.slidingmenu.DrawerLayoutActivity;
 import com.example.jzg.myapplication.slidingmenu.ToolbarDrawerLayoutActivity;
+import com.example.jzg.myapplication.tablayoutview.TabLayoutViewActivity;
 import com.example.jzg.myapplication.tablayoutviewpager.TabLayoutViewPagerActivity;
 import com.example.jzg.myapplication.tagflowlayout.TagFlowLayoutActivity;
 import com.example.jzg.myapplication.upload.UploadBigFileDemoActivity;
 import com.example.jzg.myapplication.upload.UploadDemoActivity;
-import com.example.jzg.myapplication.utils.LogUtil;
-import com.example.jzg.myapplication.utils.MyToast;
-
-import java.lang.reflect.Method;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,13 +63,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btCustomCamera;
     @BindView(R.id.bt_Double_recyclerview)
     Button bt_Double_recyclerview;
+    @BindView(R.id.bt_tabLayout_View)
+    Button btTabLayoutView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -89,9 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @OnClick({R.id.bt_recyclerView, R.id.bt_Double_recyclerview,R.id.bt_tabLayout_ViewPager, R.id.bt_TagFlowLayout, R.id
-            .bt_slidingmenu, R.id.bt_DrawerLayout_slidingmenu, R.id.bt_right, R.id.bt_left, R.id
-            .bt_linkage, R.id.bt_selecet_pic, R.id.bt_bigFile_upload, R.id.bt_banner,R.id.bt_custom_camera})
+    @OnClick({R.id.bt_recyclerView, R.id.bt_Double_recyclerview, R.id.bt_tabLayout_ViewPager, R.id.bt_TagFlowLayout, R.id.bt_slidingmenu, R.id.bt_DrawerLayout_slidingmenu, R.id.bt_right, R.id.bt_left, R.id.bt_linkage, R.id.bt_selecet_pic, R.id.bt_bigFile_upload, R.id.bt_banner, R.id.bt_custom_camera,R.id.bt_tabLayout_View})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_recyclerView:
@@ -120,13 +108,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.bt_right:
                 View rootViewR = View.inflate(this, R.layout.activity_main, null);
-                PopwindowUtils.popWindowSlidingMenu(this, rootViewR, PopwindowUtils
-                        .SLIDINGMENU_RIGHT);
+                PopwindowUtils.popWindowSlidingMenu(this, rootViewR, PopwindowUtils.SLIDINGMENU_RIGHT);
                 break;
             case R.id.bt_left:
                 View rootViewL = View.inflate(this, R.layout.activity_main, null);
-                PopwindowUtils.popWindowSlidingMenu(this, rootViewL, PopwindowUtils
-                        .SLIDINGMENU_LEFT);
+                PopwindowUtils.popWindowSlidingMenu(this, rootViewL, PopwindowUtils.SLIDINGMENU_LEFT);
                 break;
             case R.id.bt_linkage:
                 Intent i6 = new Intent(this, AdmixedContrastActivity.class);
@@ -147,6 +133,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_custom_camera:
                 Intent i10 = new Intent(this, DemoCameraActivity.class);
                 startActivity(i10);
+                break;
+            case R.id.bt_tabLayout_View:
+                Intent i11 = new Intent(this, TabLayoutViewActivity.class);
+                startActivity(i11);
                 break;
         }
     }
@@ -175,12 +165,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (d > 20) { //横向滑动
                     if (x >= 0 && x <= 100 && dx > 0 && Math.abs(dx) > 20) {   //左侧
                         View rootViewL = View.inflate(this, R.layout.activity_main, null);
-                        PopwindowUtils.popWindowSlidingMenu(this, rootViewL, PopwindowUtils
-                                .SLIDINGMENU_LEFT);
+                        PopwindowUtils.popWindowSlidingMenu(this, rootViewL, PopwindowUtils.SLIDINGMENU_LEFT);
                     } else if (dx < 0 && Math.abs(dx) > 100) { //右侧
                         View rootViewR = View.inflate(this, R.layout.activity_main, null);
-                        PopwindowUtils.popWindowSlidingMenu(this, rootViewR, PopwindowUtils
-                                .SLIDINGMENU_RIGHT);
+                        PopwindowUtils.popWindowSlidingMenu(this, rootViewR, PopwindowUtils.SLIDINGMENU_RIGHT);
                     }
                 }
                 break;
@@ -197,8 +185,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onTouchEvent(event);
     }
 
-    
-
-   
 
 }

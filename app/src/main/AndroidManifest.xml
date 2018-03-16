@@ -49,6 +49,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<!--
+        <activity android:name="com.example.jzg.myapplication.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+-->
 
         <activity android:name=".recyclerview.RecyclerViewActivity"
                   ></activity>
@@ -80,6 +89,10 @@
             android:name="com.example.jzg.myapplication.dialogactivity.DialogActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.ActivityDialogStyle"
+            />
+        <activity
+            android:name="com.example.jzg.myapplication.tablayoutview.TabLayoutViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             />
     </application>
 
