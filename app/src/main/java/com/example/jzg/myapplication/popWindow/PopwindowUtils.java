@@ -134,6 +134,7 @@ public class PopwindowUtils {
 		}
 	}
 
+	//侧滑菜单的popwindow
 	public static  void popWindowSlidingMenu(final Context context,View view,int SlidingMenu) {
 
 		if (popupWindow == null) {
@@ -190,11 +191,11 @@ public class PopwindowUtils {
 		}
 	}
 
-
-	public static  void selectPicturePop(final Context context,View view,final SelectPicture sp){
+	//popwindow 示例 移植以此为基准
+	public static  void popwindowDemo(final Context context,View view){
 		//加载popwindow布局
-		View contentView = View.inflate(context,
-				R.layout.popwindow, null);
+		View contentView = View.inflate(context,R.layout.popwindow, null);
+
 		//设置布局里各种控件功能
 //		TextView tv_photo_album = (TextView) contentView.findViewById(R.id.tv_photo_album);
 //		TextView tv_camera = (TextView) contentView.findViewById(R.id.tv_camera);
@@ -226,9 +227,9 @@ public class PopwindowUtils {
 //		});
 		int popheigt = DensityUtil.dip2px(context, 180);
 		//初始化pop 注意：popwindow最好指定固定大小，否则无法显示，不能以为布局设置了大小就没事了。
-		//因为布局这时还没加载不知道大小,如果设置成-2 包裹 将造成无法显示问题
-		popupWindow = new PopupWindow(contentView, -1,
-				popheigt,true);
+		//因为布局这时还没加载不知道大小,如果设置成-2 包裹 将造成无法显示问题，比如加载listview 拿出长度乘以item高度 计算出最终popwindow高度
+		popupWindow = new PopupWindow(contentView, -1,popheigt,true);
+
 		//注意了，popupwindow 播放动画的话，需要加上背景
 		popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -236,14 +237,14 @@ public class PopwindowUtils {
 		//设置pop获取焦点，否则嵌套在它里面的listview的setOnItemClickListener无法获取焦点响应
 		popupWindow.setFocusable(true);
 
-//		popupWindow.set
-		// 坐标，把view的坐标设置到传递进来的数组里
+		// 坐标，把view的坐标设置到传递进来的数组里  location[0]，location[1]，分别代表传入view的 x，y 坐标（左上角）
 		int[] location = new int[2];
 		view.getLocationInWindow(location);
 
 
-		//取出坐标，设置popupwindow的位置（考虑的时候要算上状态栏，因为是以全屏做为基础来算的绝对位置）
-		popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0], view.getHeight()+50-popheigt);
+		//取出坐标，设置popupwindow的位置（考虑的时候要算上状态栏，因为是以******全屏做为基础来算的绝对位置*******）
+		//location[0], location[1] + view.getHeight() 代表弹出的位置在传入 View 的正下方（y坐标 + view的高）
+		popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0], location[1] + view.getHeight());
 
 		//设置popwindow关闭时的监听
 		popupWindow.setOnDismissListener(new OnDismissListener() {
@@ -251,6 +252,7 @@ public class PopwindowUtils {
 			@Override
 			public void onDismiss() {
 				//让屏幕回复不透明状态
+					popupWindow = null;
 				backgroundAlpha((Activity)context, 1f);
 			}
 		});
@@ -282,11 +284,6 @@ public class PopwindowUtils {
 		contentView.startAnimation(translateAnimation);
 	}
 
-	//选择照片接口
-	public interface SelectPicture{
-		void photoAlbum();
-		void camera();
-	}
 
 	/**
 	 * 消掉popupWindow
