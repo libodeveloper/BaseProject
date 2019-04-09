@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -148,10 +149,21 @@ public class UploadDemoActivity extends BaseActivity<UploadPresenter> implements
      * 启动相机拍照
      */
     private void cameraPic() {
+
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri imageUri;
+        if (Build.VERSION.SDK_INT >= 24) {
+            //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
+            imageUri = FileProvider.getUriForFile(this, "com.base.test", new File(tempPicPath));
+        } else {
+            imageUri = Uri.fromFile(new File(tempPicPath));
+        }
         // 指定照片保存路径（SD卡），temp.jpg为一个临时文件，每次拍照后这个图片都会被替换
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(tempPicPath)));
-        startActivityForResult(cameraIntent, Constants.PIC_CAMERA);
+        if (imageUri != null) {
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(cameraIntent, Constants.PIC_CAMERA);
+        }
+
     }
 
 
@@ -161,6 +173,8 @@ public class UploadDemoActivity extends BaseActivity<UploadPresenter> implements
      */
     private void startPhotoZoom(Uri uri) {
         Intent intent = new Intent();
+        //添加这一句表示对目标应用临时授权该Uri所代表的文件
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //不加报错
         intent.setAction("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");// mUri是已经选择的图片Uri
         intent.putExtra("crop", "true");
@@ -173,9 +187,10 @@ public class UploadDemoActivity extends BaseActivity<UploadPresenter> implements
         //intent.putExtra("return-data", true);
         intent.putExtra("return-data", false);
         //设置压缩后的临时图片路径  -> 李波 on 2017/3/29.
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(tempZoomPicPath)));
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        startActivityForResult(intent, Constants.PIC_ZOOM);
+        //是裁剪以后的图片保存的地方。也就是我们要写入此Uri.故不需要用FileProvider
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(tempZoomPicPath)));
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+            startActivityForResult(intent, Constants.PIC_ZOOM);
     }
 
     @Override
@@ -190,7 +205,16 @@ public class UploadDemoActivity extends BaseActivity<UploadPresenter> implements
                 startPhotoZoom(data.getData());
                 break;
             case Constants.PIC_CAMERA:
-                startPhotoZoom(Uri.fromFile(new File(tempPicPath)));
+
+//                访问相册需要被限制，需要通过FileProvider创建一个content类型的Uri
+                Uri imageUri;
+                if (Build.VERSION.SDK_INT >= 24) {
+                    //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
+                    imageUri = FileProvider.getUriForFile(this, "com.base.test", new File(tempPicPath));
+                } else {
+                    imageUri = Uri.fromFile(new File(tempPicPath));
+                }
+                startPhotoZoom(imageUri);
                 break;
             case Constants.PIC_ZOOM:
                 //裁切图片后上传图片 上传的是压缩后的图片

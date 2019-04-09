@@ -34,6 +34,8 @@
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name="com.example.jzg.myapplication.app.SysApplication"
         android:allowBackup="true"
@@ -94,6 +96,48 @@
             android:name="com.example.jzg.myapplication.tablayoutview.TabLayoutViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
+
+        <receiver
+            android:name="com.example.jzg.myapplication.broadcast.MyReceiver">
+            <intent-filter>
+                <action android:name="testBrodcast">
+                </action>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON">
+                </action>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF">
+                </action>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT">
+                </action>
+            </intent-filter>
+
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.HOME" />
+             </intent-filter>
+
+        </receiver>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.base.test"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!--元数据-->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>
