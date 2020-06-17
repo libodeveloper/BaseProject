@@ -1,4 +1,4 @@
-package com.example.jzg.myapplication.cameracustom;
+package com.example.jzg.myapplication.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,9 +12,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 
+import com.blankj.utilcode.utils.ImageUtils;
 import com.example.jzg.myapplication.interfaces.OnCompressListener;
-import com.example.jzg.myapplication.utils.LogUtil;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -613,4 +614,191 @@ public class ImageCompressor {
 
         return new File(thumb);
     }
+
+
+    /***
+     * 从相册选取照片
+     * @param filePath
+     * @return
+     */
+    public static Bitmap loadBitmapFile(String filePath){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        options.inSampleSize = 1;
+        BitmapFactory.decodeFile(filePath,options);
+        LogUtil.e(TAG,"src:"+(options.outWidth+"x"+options.outHeight));
+        int inSampleSize = calculateInSampleSize(options, 3264); // 以3264分辨率为基准缩放
+        options.inJustDecodeBounds = false;
+        options.inSampleSize = inSampleSize;
+
+/*******************************************************************************************************/
+
+        //当前分配给APP剩余内存
+        float memorysurplus = MemoryUtil.getMemoryInfo();
+
+        //计算生成当前bitmap需要多大内存 长 * 宽 * 4Byte （默认ARGB_8888 模式 一个像素点占8+8+8+8=32位，4个字节）
+        float srcbitmapmemorySize = (float) (options.outWidth * options.outHeight * 4 * 1.0/ (1024 * 1024));
+
+        float bitmapmemorySize = (float) ((options.outWidth/inSampleSize) * ( options.outHeight/inSampleSize) * 4 * 1.0/ (1024 * 1024));
+
+        LogUtil.e(TAG, "原始bitmap需要内存 == "+ srcbitmapmemorySize);
+        LogUtil.e(TAG, "缩放系数inSampleSize == "+ inSampleSize);
+        LogUtil.e(TAG, "当前剩余内存 == "+memorysurplus+"  生成bitmap需要内存 = "+bitmapmemorySize);
+        //当需要内存 超过 剩余内存就会引发OOM，但是！！！这只能是在程序持续不断的运行中才会发生。
+        //什么叫持续运行，比如点击选择照片后，不再进行任何人手操作，程序自己在进行压缩缩放旋转等等一系列运行过程中，这个时候如果需要内存大于剩余内存就会OOM
+        //反之如果连续点击N个照片选择，虽然到了一定数量打印出剩余内存小于所需了，但因为手动操作有间隙，哪怕有毫秒级的间隙，系统也可能回收了部分内存
+        //所以这个时候虽然打印出剩余内存小于所需了，但也不会OOM
+/*******************************************************************************************************/
+
+        //根据缩放系数生成不OOM的bitmap
+        Bitmap src = BitmapFactory.decodeFile(filePath,options);
+
+        LogUtil.e(TAG,"缩放前 = "+src.getWidth()+" x "+src.getHeight());
+        float scaledRate = getScaledRate(src,3264);
+        if(scaledRate!=1){
+            LogUtil.e(TAG,"缩放至 = "+src.getWidth()*scaledRate+" x "+src.getHeight()*scaledRate+" 缩放系数"+scaledRate);
+            src = scaleImage(src,(int)(src.getWidth()*scaledRate),(int)(src.getHeight()*scaledRate));
+        }
+        LogUtil.e(TAG,"scaled:"+(src.getWidth()+"x"+src.getHeight())+","+(ImageUtils.bitmap2Bytes(src, Bitmap.CompressFormat.JPEG).length/1024+"kb =============================="));
+//        loadBitmapFile(filePath);
+
+        return src;
+    }
+
+    /**
+     * Created by 李波 on 2020/6/16.
+     * 计算缩放系数
+     */
+    public static int calculateInSampleSize(BitmapFactory.Options options,int largerSideMaxLength) {
+        int inSampleSize = 1;
+        int lagerSide = Math.max(options.outWidth,options.outHeight);//宽高中较大的一边的长度(像素)
+        if(lagerSide>largerSideMaxLength){
+            int lagerSideHalf = lagerSide/2;
+            while (lagerSideHalf / inSampleSize>largerSideMaxLength) {
+                inSampleSize *= 2;
+            }
+
+            //如果缩放后的大小还比限定最大值大1000以上，那就继续缩放，为了防止现在越来越大的照片生成bitmap时吃太多内存
+            //以1亿像素图片举列，9024*12032 * 4 * 1.0/ (1024 * 1024) = 414.18MB
+            //假设当前设备最大分配app内存为192MB，那么直接加载自然会OOM
+            //按上面的缩放计算出 inSampleSize = 2, 最终的结果是 4512 * 6016，小了4倍，也就是100多MB，一次就吃100M内存
+            //100多M < 192M 虽然这样生成一次bitmap不会OOM，但如果持续不断的这样生成 要不了几次就会OOM了
+            //所以必须尽量的控制缩放的系数，这里6016 比 3264限定值快大两倍了，所以我们把它缩放到比较接近的值这样生成bitmap所需内存就小了
+            //虽然可以在 AndroidManifest.xml  <application 下加上 android:largeHeap="true" 来申请最大分配内存，实际这样确实也减少很多OOM
+            //但不能因为这样就不优化内存的使用，性能始终第一嘛
+            while (lagerSide/inSampleSize - largerSideMaxLength>1000){
+                LogUtil.e(TAG," calculateSide= "+lagerSide/inSampleSize);
+                inSampleSize *= 2;
+            }
+        }
+        return inSampleSize;
+    }
+
+
+    /**
+     * Created by 李波 on 2020/6/16.
+     * 缩放宽高到限定的值
+     * 当根据 inSampleSize 生成bitmap后，如果宽高有大于限定值的就缩放至限定值
+     */
+    public static Bitmap scaleImage(Bitmap src, int scaleWidth, int scaleHeight) {
+        if (src == null) return null;
+        Bitmap res = null;
+        try {
+
+ /*******************************************************************************************************/
+
+            float memorysurplus = MemoryUtil.getMemoryInfo();
+
+            //计算生成当前bitmap需要多大内存 长 * 宽 * 4Byte （默认ARGB_8888 模式 一个像素点占8+8+8+8=32位，4个字节）
+            float bitmapmemorySize = (float) (scaleWidth*scaleHeight * 4 * 1.0/ (1024 * 1024));
+
+            LogUtil.e("MemoryUtil", "当前剩余内存 == "+memorysurplus+"  bitmap需要内存 = "+bitmapmemorySize);
+
+/*******************************************************************************************************/
+
+            res = Bitmap.createScaledBitmap(src, scaleWidth, scaleHeight, false);
+
+        }catch (Error error){
+
+            LogUtil.e(TAG,error.getMessage());
+            MemoryUtil.getMemoryInfo();
+        }
+
+        if (res == null) {
+            return src;
+        }
+        if (res != src && !src.isRecycled()) {
+            src.recycle();
+        }
+        return res;
+    }
+
+    /***
+     * 计算图片的宽高调整比
+     * @param src 需要处理的图片
+     * @param rule 参考值
+     * @return
+     */
+    public static float getScaledRate(Bitmap src, int rule){
+        float rate = 1.0f;
+        if(src==null)
+            return  rate;
+        int srcWidth = src.getWidth();
+        int srcHeight = src.getHeight();
+        if(srcWidth>=srcHeight){
+            if(srcWidth>rule){
+                rate = rule*1.0f/srcWidth;
+            }
+        }else if(srcWidth<srcHeight){
+            if(srcHeight>rule){
+                rate = rule*1.0f/srcHeight;
+            }
+        }
+        return rate;
+    }
+
+    /**
+     * 旋转图片
+     *
+     * @param src     源图片
+     * @param degrees 旋转角度
+     */
+    public static Bitmap rotateBitmap(Bitmap src, int degrees) {
+        if (src == null || degrees == 0) return src;
+        Matrix matrix = new Matrix();
+        matrix.setRotate(degrees, src.getWidth() / 2, src.getHeight() / 2);
+        Bitmap res = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+        if (!src.isRecycled()) src.recycle();
+        return res;
+    }
+
+    /**
+     * 保存图片
+     *
+     * @param src      源图片
+     * @param filePath 要保存到的文件
+     * @param format   格式
+     * @param quality  压缩质量
+     * @return {@code true}: 成功<br>{@code false}: 失败
+     */
+    public static boolean save(Bitmap src, String filePath, Bitmap.CompressFormat format,int quality) {
+        if (src==null || TextUtils.isEmpty(filePath))
+            return false;
+        BufferedOutputStream bos = null;
+        try {
+            bos = new BufferedOutputStream(new FileOutputStream(filePath,false));
+            return src.compress(format, quality, bos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                bos.flush();
+                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

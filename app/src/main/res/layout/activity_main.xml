@@ -112,6 +112,20 @@
         android:textAllCaps="false"
         android:text="自定义相机(单拍 + 连拍)"/>
 
+    <Button
+        android:id="@+id/bt_slidingdrawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="带把手抽屉"/>
+
+    <Button
+        android:id="@+id/bt_cameraDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="相机讲解"/>
+
 
     </LinearLayout>
    </ScrollView>

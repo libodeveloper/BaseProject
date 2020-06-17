@@ -10,11 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jzg.myapplication.R;
-import com.example.jzg.myapplication.app.SysApplication;
 import com.example.jzg.myapplication.bean.BannerBean;
-import com.example.jzg.myapplication.utils.FrescoImageLoader;
-import com.facebook.drawee.view.SimpleDraweeView;
-
 import java.util.List;
 
 import me.relex.photodraweeview.PhotoDraweeView;
@@ -25,7 +21,7 @@ import me.relex.photodraweeview.PhotoDraweeView;
 public class ExtendedViewPager1Adapter extends PagerAdapter {
     private List<BannerBean> imageList;
     private Context context;
-
+    PhotoDraweeView imageView;
     public ExtendedViewPager1Adapter(Context context, List<BannerBean> list) {
         this.context = context;
         this.imageList = list;
@@ -44,14 +40,10 @@ public class ExtendedViewPager1Adapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.photo_item, null);
-        PhotoDraweeView imageView = (PhotoDraweeView) view.findViewById(R.id.photo_img);
+         imageView = (PhotoDraweeView) view.findViewById(R.id.photo_img);
         TextView title = (TextView) view.findViewById(R.id.title);
-//        if (imageList.get(position).getBannerPath().startsWith("http")) {
-////            imageView.setPhotoUri(Uri.parse(imageList.get(position).getBannerPath()));
-//        } else {
-//            imageView.setPhotoUri(Uri.parse("file://" + imageList.get(position).getBannerPath()));
-//        }
         loadResDrawablePic(context,imageView,imageList.get(position).getBannerPath());
+
 
         title.setText(imageList.get(position).getBannerName());
 
@@ -70,4 +62,10 @@ public class ExtendedViewPager1Adapter extends PagerAdapter {
                 "/" + id);
         simpleDraweeView.setPhotoUri(uri);
     }
+
+
+    public PhotoDraweeView getImageView(){
+        return imageView;
+    }
+
 }

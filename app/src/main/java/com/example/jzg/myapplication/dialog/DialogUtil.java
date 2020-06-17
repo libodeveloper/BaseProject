@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.jzg.myapplication.R;
+import com.example.jzg.myapplication.app.SysApplication;
 
 
 /**
@@ -84,6 +85,34 @@ public class DialogUtil {
         });
         dialog.show();
     }
+
+    /**
+     * Created by 李波 on 2020/6/15.
+     * 显示转圈等待dialog
+     */
+    public static void showDialog(Context context){
+        dialog = new Dialog(context, R.style.DialogStyle);
+        dialog.setContentView(R.layout.dialog_wait);
+        dialog.setCanceledOnTouchOutside(false);   //触摸dialog外 是否关闭dialog
+        dialog.setCancelable(false);                //点击物理返回键是否关闭dialog
+        dialog.show();
+    }
+
+    /**
+     * Created by 李波 on 2020/6/15.
+     * 显示转圈等待dialog 带信息
+     */
+    public static void showDialog(Context context,String msg){
+        dialog = new Dialog(context, R.style.DialogStyle);
+        dialog.setContentView(R.layout.dialog_wait);
+        dialog.setCanceledOnTouchOutside(false);   //触摸dialog外 是否关闭dialog
+        dialog.setCancelable(false);                //点击物理返回键是否关闭dialog
+        TextView tvContent = (TextView) dialog.findViewById(R.id.tvContent);
+        tvContent.setVisibility(View.VISIBLE);
+        tvContent.setText(msg);
+        dialog.show();
+    }
+
 
     /**
      * 关闭对话框

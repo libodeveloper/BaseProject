@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     >
 
+
     <com.example.jzg.myapplication.view.ExtendedViewPager
         android:id="@+id/extendedVP"
         android:layout_width="match_parent"
@@ -35,6 +36,42 @@
             android:layout_centerInParent="true"
             android:text="title"
             android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="保存"/>
+
+        <Button
+            android:id="@+id/btDang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/btSave"
+            android:text="挡"/>
+
     </RelativeLayout>
+
+    <com.example.jzg.myapplication.view.SetPolyToPoly
+        android:id="@+id/poly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginBottom="60dp"/>
+
+
+    <com.example.jzg.myapplication.view.SingleTouchView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/SingleTouchView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#33000000"
+        app:scale="1.2"
+        app:src="@drawable/logo"
+        android:visibility="gone"
+        app:controlLocation="right_top"/>
+
+
 
 </RelativeLayout>

@@ -7,7 +7,7 @@
     <color name="google_green">#1EFF05</color>
     <color name="google_red">#EA2500</color>
     <color name="google_yellow">#F5FF27</color>
-
+    <color name="success_stroke_color">#A5DC86</color>
 
     <color name="black_overlay_33">#33000000</color>
     <color name="common_green">@color/global_green_1</color>

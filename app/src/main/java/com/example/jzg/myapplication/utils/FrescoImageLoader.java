@@ -136,6 +136,22 @@ public class FrescoImageLoader implements cn.finalteam.galleryfinal.ImageLoader 
 
     }
 
+    /***
+     * 根据url清除单个缓存
+     * @param url 图片url
+     * @param needDeleteFile 是否需要同步删除文件
+     */
+    public static void clearSingleCacheByUrl(String url,boolean needDeleteFile){
+        if(TextUtils.isEmpty(url)){
+            return;
+        }
+        Fresco.getImagePipeline().evictFromCache(Uri.parse(url));
+        if(needDeleteFile && !url.startsWith("http")){
+            com.blankj.utilcode.utils.FileUtils.deleteFile(url);
+        }
+    }
+
+
     //------------当前使用以下加载图片保证加载的是缩略图不卡顿----------------------------------------------------  -> 李波 on 2016/12/2.
 
     /**

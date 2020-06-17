@@ -53,6 +53,7 @@ import com.example.jzg.myapplication.bean.PictureItem;
 import com.example.jzg.myapplication.global.Constants;
 import com.example.jzg.myapplication.interfaces.OnCompressListener;
 import com.example.jzg.myapplication.utils.FrescoCacheHelper;
+import com.example.jzg.myapplication.utils.ImageCompressor;
 import com.example.jzg.myapplication.utils.LogUtil;
 import com.example.jzg.myapplication.utils.MyToast;
 import com.example.jzg.myapplication.utils.ScreenSwitchUtils;

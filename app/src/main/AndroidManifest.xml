@@ -61,6 +61,12 @@
         </activity>
 -->
 
+        <activity android:name=".cameradetails.CameraActivity"
+                    android:screenOrientation="portrait"
+                  ></activity>
+        <activity android:name=".cameradetails.DemoActivity"
+                    android:screenOrientation="portrait"
+                  ></activity>
         <activity android:name=".recyclerview.RecyclerViewActivity"
                   ></activity>
         <activity android:name="com.example.jzg.myapplication.doublerecyclerview.DoubleRecyclerViewActivity"></activity>

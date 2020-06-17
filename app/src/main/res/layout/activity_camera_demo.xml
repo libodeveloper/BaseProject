@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:camera="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/black">
+
+
+    <RelativeLayout
+        android:id="@+id/rlTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fl_surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlTitle"
+        android:background="@android:color/black">
+
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <com.example.jzg.myapplication.view.FocusImageView
+            android:id="@+id/iv_focus"
+            android:layout_width="75dip"
+            android:layout_height="75dip"
+            camera:focus_focusing_id="@drawable/focus_focusing"
+            camera:focus_success_id="@drawable/focus_focused"
+            camera:focus_fail_id="@drawable/focus_focus_failed"
+            android:visibility="gone"
+            />
+
+        <com.example.jzg.myapplication.view.VerticalSeekBar
+            android:id="@+id/vSeekBar"
+            android:layout_width="40dp"
+            android:layout_height="150dp"
+            android:layout_toRightOf="@+id/iv_focus"
+            android:layout_marginTop="-37dp"
+            android:layout_alignTop="@+id/iv_focus"
+            android:visibility="gone"
+            android:thumb="@drawable/exposure"
+            />
+
+
+
+    </RelativeLayout>
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/ivOutline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llBottom"
+        android:layout_below="@+id/rlTitle"
+        android:scaleType="centerCrop"
+        />
+
+
+
+
+    <LinearLayout
+        android:id="@+id/llBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:layout_alignParentBottom="true"
+        android:background="#aa000000"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rlCaptureLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rlPreviewLayout"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:layout_marginLeft="10dp">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/ivPreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    camera:actualImageScaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/tvPicName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:shadowColor="#aa000000"
+                    android:shadowDy="5"
+                    android:shadowDx="5"
+                    android:shadowRadius="5"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"/>
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/ivCapture"
+                android:maxHeight="72dp"
+                android:maxWidth="72dp"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_camera_button" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ivFlashToggle"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_flash_off" />
+
+                <ImageView
+                    android:id="@+id/ivSwitchCamera"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="20dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_switch" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <me.relex.photodraweeview.PhotoDraweeView
+        android:id="@+id/ivBigPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlTitle"
+        android:background="@android:color/black"
+        camera:failureImageScaleType="centerCrop"
+        camera:placeholderImage="@android:color/transparent"
+        android:visibility="gone"
+        camera:placeholderImageScaleType="centerCrop"/>
+
+    <RelativeLayout
+        android:id="@+id/rlControl"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/tvRecapture"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:text="重拍"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/tvConfirm"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_marginRight="30dp"
+            android:text="确定"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -18,7 +18,6 @@ import com.example.jzg.myapplication.R;
  */
 public class TabViewPagerFragment extends Fragment {
 
-
     private int mPage;
 
     public void setmPage(int mPage) {

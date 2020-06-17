@@ -1,10 +1,15 @@
 package com.example.jzg.myapplication.utils;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -243,5 +248,59 @@ public class FileUtils
 	   return fileSizeString;
 	}
 
-	
+	public static boolean saveFile(byte[] b, String outputFile) {
+		boolean result = false;
+		BufferedOutputStream stream = null;
+		try {
+			FileOutputStream fstream = new FileOutputStream(new File(outputFile));
+			stream = new BufferedOutputStream(fstream);
+			stream.write(b);
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
+
+
+	/**
+	 2. * Try to return the absolute file path from the given Uri
+	 3. *
+	 4. * @param context
+	 5. * @param uri
+	 6. * @return the file path or null
+	 7. */
+public static String getRealFilePath( final Context context, final Uri uri ) {
+	  if ( null == uri ) return null;
+	   final String scheme = uri.getScheme();
+	    String data = null;
+	    if ( scheme == null )
+		        data = uri.getPath();
+	    else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+		       data = uri.getPath();
+		    } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
+		       Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
+		        if ( null != cursor ) {
+			           if ( cursor.moveToFirst() ) {
+				               int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
+				               if ( index > -1 ) {
+					                    data = cursor.getString( index );
+					               }
+				           }
+			           cursor.close();
+			      }
+		   }
+	   return data;
+	}
+
+
 }
