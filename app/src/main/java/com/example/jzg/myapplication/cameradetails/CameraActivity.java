@@ -1,5 +1,6 @@
 package com.example.jzg.myapplication.cameradetails;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,10 @@ import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.PictureCallback;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +21,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.SurfaceHolder;
@@ -65,7 +71,7 @@ import rx.schedulers.Schedulers;
  * @Email: libo@jingzhengu.com
  * @Description: 自定义相机 （竖屏）
  */
-public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
+public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback,SensorEventListener {
     protected String TAG = getClass().getSimpleName();
     @BindView(R.id.fl_surfaceView)
     RelativeLayout flSurfaceView;
@@ -144,6 +150,24 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     private BitmapUtils bitmapUtils;
 
+    private SensorManager mSensroMgr;//传感器管理类 这里是指手机上的光线传感器，不是摄像头的亮度传感器
+
+    //===========摄像头感知光线亮度==================================
+    //上次记录的时间戳
+    long lastRecordTime = System.currentTimeMillis();
+
+    //上次记录的索引
+    int darkIndex = 0;
+
+    //一个历史记录的数组，255是代表亮度最大值
+    long[] darkList = new long[]{255, 255, 255, 255};
+
+    //扫描间隔
+    int waitScanTime = 300;
+
+    //亮度低的阀值
+    int darkValue = 80;
+
 
     private Handler mHandler = new Handler(){
         @Override
@@ -165,6 +189,21 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         initData();
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensroMgr.registerListener(this, mSensroMgr.getDefaultSensor(Sensor.TYPE_LIGHT),
+                SensorManager.SENSOR_DELAY_NORMAL);//开启监听传感器
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSensroMgr.unregisterListener(this);//断开监听传感器
+    }
+
     private void initData(){
         com.blankj.utilcode.utils.FileUtils.createOrExistsDir(dirPath);
         screenWidth  = ScreenUtils.getScreenWidth();
@@ -175,7 +214,12 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         mSurfaceHolder = surfaceView.getHolder();
         mSurfaceHolder.addCallback(this);
         setManualFocuslisten();
+        mSensroMgr = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
     }
+
+
+
 
     private void initCamera(){
 
@@ -244,6 +288,8 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         //7、打开相机先自动对焦下
         autoFocus();
 
+        //启动摄像头对环境亮度的监听，较暗时提示打开闪光灯
+        mCamera.setPreviewCallback(previewCallback);
 
     }
 
@@ -529,11 +575,13 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     private void releaseCamera(){
         if (mCamera != null) {
             try {
+                mCamera.setPreviewCallback(null);
                 mCamera.stopPreview();
                 mCamera.release();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             mCamera = null;
             if (mOrEventListener != null) mOrEventListener.disable();
         }
@@ -673,5 +721,82 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     }
 
+
+    //这里是指手机上的光线传感器，不是摄像头的亮度传感器，也就是接电话时感光自动息屏那个
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
+            float light_strength = event.values[0];//光线强度
+            if (light_strength < 50) {
+                LogUtil.e(TAG,"光线强度< 50 "+light_strength);
+            } else {
+                LogUtil.e(TAG,"光线强度> 50 "+light_strength);
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+
+    //摄像头感应环境亮度的回调，当亮度低时提示打开闪光灯
+    Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
+        @Override
+        public void onPreviewFrame(byte[] data, Camera camera) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastRecordTime < waitScanTime) {
+                return;
+            }
+            lastRecordTime = currentTime;
+            int width = camera.getParameters().getPreviewSize().width;
+            int height = camera.getParameters().getPreviewSize().height;
+
+            //像素点的总亮度
+            long pixelLightCount = 0L;
+
+            //像素点的总数
+            long pixeCount = width * height;
+
+            //采集步长，因为没有必要每个像素点都采集，可以跨一段采集一个，减少计算负担，必须大于等于1。
+            int step = 10;
+            //data.length - allCount * 1.5f的目的是判断图像格式是不是YUV420格式，只有是这种格式才相等
+            //因为int整形与float浮点直接比较会出问题，所以这么比
+            if (Math.abs(data.length - pixeCount * 1.5f) < 0.00001f) {
+                for (int i = 0; i < pixeCount; i += step) {
+                    //如果直接加是不行的，因为data[i]记录的是色值并不是数值，byte的范围是+127到—128，
+                    // 而亮度FFFFFF是11111111是-127，所以这里需要先转为无符号unsigned long参考Byte.toUnsignedLong()
+                    pixelLightCount += ((long) data[i]) & 0xffL;
+                }
+                //平均亮度
+                long cameraLight = pixelLightCount / (pixeCount / step);
+                //更新历史记录
+                int lightSize = darkList.length;
+                darkList[darkIndex = darkIndex % lightSize] = cameraLight;
+                darkIndex++;
+                boolean isDarkEnv = true;
+                //判断在时间范围waitScanTime * lightSize内是不是亮度过暗
+                for (int i = 0; i < lightSize; i++) {
+                    if (darkList[i] > darkValue) {
+                        isDarkEnv = false;
+                    }
+                }
+                Log.e(TAG, "摄像头环境亮度为 ： " + cameraLight);
+                if (!isFinishing()) {
+                    //亮度过暗就提醒
+                    if (isDarkEnv) {
+                        Log.e(TAG, "轻触照亮！");
+                        MyToast.showLong("轻触照亮！");
+//                        CameraUtil.getInstance().turnLightOn(mCamera);
+                    } else {
+//                        CameraUtil.getInstance().turnLightOff(mCamera);
+
+                    }
+                }
+            }
+        }
+
+    };
 
 }
